@@ -1,51 +1,34 @@
-# 🎭 Roastgram
+# 🎭 RoastX
 
-Roastgram adalah sebuah aplikasi berbasis web yang dapat memberikan roasting sarkastik terhadap profil Instagram berdasarkan username yang diinputkan pengguna. Proyek ini dibangun menggunakan teknologi modern dan AI untuk menghasilkan respons yang unik dan menghibur.
+RoastX is a fun web-based application that generates witty and sarcastic responses targeting a user's X (Twitter) profile, based on the username provided. The project uses Gemini AI to create unique, entertaining roasts.
 
----
-
-## 🚀 Fitur Utama
-
-- 🔥 **Roasting Profil Instagram dengan AI** – Dapatkan roasting sarkastik berdasarkan username Instagram.
-- 🔍 **Analisis Username** – Memproses data untuk menghasilkan roasting yang relevan.
-- 🎭 **Respons Sarkastik** – Menggunakan AI Gemini untuk menciptakan respons yang lucu dan tajam.
-- ✨ **Animasi Interaktif** – Menggunakan Framer Motion untuk pengalaman visual yang menarik.
-- 🎨 **Desain Modern** – UI responsif dan estetik dengan Tailwind CSS.
-- 🔗 **Scraping Data** – Menggunakan Apify untuk mengambil data yang dibutuhkan.
-- ⚡ **Performa Optimal** – Memanfaatkan Next.js 15 dan API Routes untuk kinerja cepat dan efisien.
+RoastX is inspired by the [Roastgram](https://github.com/syahrulnizam7/roastgram) project created by [syahrulnizam7](https://github.com/syahrulnizam7) but with some differences: while Roastgram utilizes JavaScript and targets Instagram, RoastX is built using PHP and is designed to generate roasts based on X (formerly Twitter) profiles.
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
+## 🚀 Main Features
 
-### **Frontend**
+- **🔥 Roasting X Profile with AI** – Get sarcastic roasting based on the X (Twitter) username.
+- **🔍 Username Analysis** – Process data to generate relevant roasting.
+- **🎭 Sarcastic Responses** – Using Gemini AI to create witty and sharp responses.
+- **✨ Interactive Animations** – Using Framer Motion for an engaging and dynamic visual experience.
+- **🎨 Modern Design** – Responsive and aesthetic UI with Tailwind CSS for an appealing layout.
+- **🔗 Data Scraping** – Using Apify to fetch the required data from X (Twitter).
+- **⚡ Optimal Performance** – Leveraging PHP for fast development and a small app size.
 
-- Next.js 15
-- TypeScript
+---
+
+## 🛠️ Technologies Used
+
+- PHP
 - Tailwind CSS
 - Framer Motion
-
-### **Backend**
-
 - AI Gemini
 - Apify
 
-### **Hosting**
-
-- Vercel
-
 ---
 
-## 📸 Tangkapan Layar
-
-\_![screencapture-roastgram-vercel-app-2025-03-18-06_30_47](https://github.com/user-attachments/assets/95f49008-64ea-4b7c-8a0a-b96152113d04)
+## 📸 ScreenShot
 
 
----
-
-## 📫 Kontak
-
-- 📧 **Email**: syhrulnizm7@gmail.com
-- 📸 **Instagram**: [@alangkun](https://instagram.com/alangkun)
-
-Terima kasih telah menggunakan Roastgram! 🚀🔥
+Terima kasih telah menggunakan RoastX! 🚀🔥

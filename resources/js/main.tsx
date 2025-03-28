@@ -81,6 +81,8 @@ export default function Home({ lang }: { lang: string }) {
     }, 2000);
   };
 
+  
+
   return (
     <main
       className={`min-h-screen font-mono overflow-x-hidden transition-colors duration-300 ${

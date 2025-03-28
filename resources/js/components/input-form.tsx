@@ -186,7 +186,7 @@ export function InputForm({
   );
 }
 
-function PeopleRostedCard ({ darkMode, lang }: { darkMode: boolean, lang: string }) {
+function updateRoastedPeople() {
   const [roastedPeople, setRoastedPeople] = useState<number>(0);
   const [previousRoastedPeople, setPreviousRoastedPeople] = useState<number>(0);
   const [isCounting, setIsCounting] = useState<boolean>(false);
@@ -247,7 +247,13 @@ function PeopleRostedCard ({ darkMode, lang }: { darkMode: boolean, lang: string
         clearInterval(countUpInterval);
       };
     }
-  }, [roastedPeople, previousRoastedPeople]); 
+  }, [roastedPeople, previousRoastedPeople]);
+
+  return {roastedPeople, previousRoastedPeople};
+}
+
+function PeopleRostedCard ({ darkMode, lang }: { darkMode: boolean, lang: string }) {
+  const { roastedPeople, previousRoastedPeople } = updateRoastedPeople();
 
   return (
     roastedPeople > 0 &&

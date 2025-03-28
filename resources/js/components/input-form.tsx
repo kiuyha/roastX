@@ -215,7 +215,7 @@ function PeopleRostedCard ({ darkMode, lang }: { darkMode: boolean, lang: string
   }, []); 
 
   useEffect(() => {
-    if (roastedPeople >= previousRoastedPeople) {
+    if (roastedPeople > previousRoastedPeople) {
       const duration = 300; 
       const stepTime = 10;
       const steps = duration / stepTime;

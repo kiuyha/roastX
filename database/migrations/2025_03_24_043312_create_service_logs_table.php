@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('previous_responses', function (Blueprint $table) {
+        Schema::create('service_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
-            $table->json('data');
-            $table->json('response');
+            $table->enum('service', ['Gemini', 'X']);
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('previous_responses');
+        Schema::dropIfExists('service_logs');
     }
 };

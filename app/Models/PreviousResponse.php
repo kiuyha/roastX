@@ -13,4 +13,9 @@ class PreviousResponse extends Model
         'data',
         'response',
     ];
+
+    protected $casts = [
+        'data' => 'array',
+        'response' => 'array',
+    ];
 }

@@ -13,6 +13,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Number;
 
 class MainController extends Controller
 {
@@ -48,18 +50,6 @@ class MainController extends Controller
 
         // save user log
         $ip = $this->getUserIpAdress();
-        
-        // block user if exceed daily limit
-        if(FormSubmission::where('ip_address', $ip)
-            ->whereDate('created_at', today())
-            ->count() >= 5) {
-            return response()->json([
-                'success' => false,
-                'message' => $lang == 'en' ? 
-                    'You have exceeded the daily limit of 5 times. Please try again tomorrow.' :
-                    'Kamu telah melewati batas harian sebanyak 5 kali. Silahkan coba lagi besok.'
-            ], 400);
-        }
 
         // check previous response
         $previousResponse = PreviousResponse::where('username', $username)->first();
@@ -77,7 +67,18 @@ class MainController extends Controller
                 'success' => true
             ]);
         // else return json with fetch api response
-        }else{
+        } else if(FormSubmission::where('ip_address', $ip)
+            ->whereDate('created_at', today())
+            ->count() >= 10) {
+            // block user if exceed daily limit
+            return response()->json([
+                'success' => false,
+                'message' => $lang == 'en' ? 
+                    'You have exceeded the daily limit of 5 times. Please try again tomorrow.' :
+                    'Kamu telah melewati batas harian sebanyak 5 kali. Silahkan coba lagi besok.'
+            ], 400);
+        }
+        else {
             $response = $this->getResponse($username, $previousResponse, $lang);
             $response['success'] ?? $save();
             return response()->json($response, ($response['success'] ? 200 : 400));
@@ -85,7 +86,7 @@ class MainController extends Controller
 
     }
 
-    public function getUserIpAdress() : string
+    private function getUserIpAdress() : string
     {
         if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             return explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0];
@@ -94,7 +95,7 @@ class MainController extends Controller
         };
     }
 
-    public function getResponse(string $username , PreviousResponse | null $previousResponse, string $lang) : array
+    private function getResponse(string $username , PreviousResponse | null $previousResponse, string $lang) : array
     {
         if ($previousResponse && $previousResponse->created_at >= today()->subDays(1)){
             $responseX = $previousResponse->data;
@@ -137,7 +138,7 @@ class MainController extends Controller
         ];
     }
 
-    public function getResponseX(string $username, string $lang) : array | string
+    private function getResponseX(string $username, string $lang) : array | string
     {
         // I using scraping because X api is too expensive
         try{
@@ -206,13 +207,13 @@ class MainController extends Controller
             }
 
             return [
-                'profilePicUrl' => "https://nitter.net$profilePicUrl",
+                'profilePicUrl' => "/proxy-image?url=https://nitter.net$profilePicUrl",
                 'fullname' => $fullname,
                 'biography' => $biography,
                 'isVerified' => $isVerified,
-                'tweetsCount' => $tweetsCount,
-                'followsCount' => $following,
-                'followersCount' => $followers,
+                'tweetsCount' => $this->formatNumber( (int) str_replace(',', '', $tweetsCount) ),
+                'followsCount' => $this->formatNumber( (int) str_replace(',', '', $following) ),
+                'followersCount' => $this->formatNumber( (int) str_replace(',', '', $followers) ),
                 'tweets' => $tweets,
             ];
         }catch(\Exception $e){
@@ -223,7 +224,7 @@ class MainController extends Controller
         return $lang == 'en' ? 'Something went wrong' : 'Terjadi kesalahan';
     }
 
-    public function getResponseGemini(string $username, array $profileDataString, string $lang): string | null
+    private function getResponseGemini(string $username, array $profileDataString, string $lang): string | null
     {
         // switch api key if limit exceeded
         $logQuery = ServiceLog::where('service', 'Gemini')->whereDate('created_at', today());
@@ -275,5 +276,51 @@ class MainController extends Controller
             return null;
         };
         return $responseGemini->json()['candidates'][0]['content']['parts'][0]['text'] ?? null;
+    }
+
+    protected function formatNumber(int $number): string
+    {
+        if ($number < 1000) {
+            return (string) Number::format($number, 0);
+        }
+
+        if ($number < 1000000) {
+            return Number::format($number / 1000, 1) . 'K';
+        }
+
+        return Number::format($number / 1000000, 1) . 'M';
+    }
+
+    public function getImage(Request $request)
+    {
+        $imageUrl = $request->query('url'); // Get the 'url' query parameter
+
+        // Check if the URL is provided
+        if (!$imageUrl) {
+            return response("Image URL is required", 400);
+        }
+
+        // Try to fetch the image content
+        try {
+            $response = Http::get($imageUrl);
+
+            if (!$response->successful()) {
+                return response("Failed to fetch image", $response->status());
+            }
+
+            // Get the content type of the image
+            $contentType = $response->header('Content-Type', 'image/jpeg');
+
+            // Return the image with the appropriate content type
+            return Response::make($response->body(), 200, [
+                'Content-Type' => $contentType,
+                'Cache-Control' => 'public, max-age=86400', // Cache for 1 day
+            ]);
+
+        } catch (\Exception $e) {
+            // Log the error and return a server error response
+            Log::error('Error proxying image: ' . $e->getMessage());
+            return response("Failed to proxy image", 500);
+        }
     }
 }

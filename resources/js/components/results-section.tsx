@@ -374,7 +374,8 @@ function RoastCard({
       // Profile image
       const profileImg = document.createElement("img");
       profileImg.src =
-        profileData?.profilePicUrl || "/placeholder.svg?height=64&width=64";
+        profileData?.profilePicUrl || "/placeholder.svg?height=64&width=64"
+        ;
       profileImg.alt = username;
       profileImg.style.width = "64px";
       profileImg.style.height = "64px";
@@ -417,12 +418,22 @@ function RoastCard({
       simplifiedRoast.style.border = "3px solid #000000";
 
       // Add the roast text
-      const divRoast = document.createElement("div");
-      divRoast.style.color = darkMode ? "#ffffff" : "#000000";
-      divRoast.style.fontSize = "16px";
-      divRoast.style.fontWeight = "bold";
-      divRoast.innerHTML = await marked(roast);
-      simplifiedRoast.appendChild(divRoast);
+      const processRoast = async () => {
+        // Split the roast string by newlines and process each paragraph
+        for (const paragraph of roast.split("\n")) {
+          if (paragraph.trim()) {
+            const p = document.createElement("p");
+            p.innerHTML = await marked(paragraph);
+            p.style.color = darkMode ? "#ffffff" : "#000000";
+            p.style.fontSize = "16px";
+            p.style.fontWeight = "bold";
+            p.style.marginBottom = "12px";
+            p.style.paddingLeft = "16px";
+            simplifiedRoast.appendChild(p);
+          }
+        }
+      };
+      await processRoast();
 
       // Add a watermark
       const watermark = document.createElement("div");
@@ -446,6 +457,7 @@ function RoastCard({
         backgroundColor: darkMode ? "#18181b" : "#FF5F1F",
         logging: false, // Disable logging to avoid console spam
         useCORS: true, // Enable CORS for images
+        allowTaint: true,
       });
 
       // Remove the temporary element
@@ -461,7 +473,7 @@ function RoastCard({
         // Create download link
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
-        link.download = `roastgram-${username}-${Date.now()}.png`;
+        link.download = `roastx-${username}-${Date.now()}.png`;
         link.href = url;
         link.click();
 
@@ -522,8 +534,18 @@ function RoastCard({
               className={`${
                 darkMode ? "text-white" : "text-black"
               } space-y-3 md:space-y-4 text-base md:text-lg font-bold`}
-              dangerouslySetInnerHTML={{ __html: marked(roast) }}
             >
+            {roast.split("\n").map((paragraph, index) => (
+                <motion.div key={index} variants={item} className="relative">
+                  <p
+                    className={`${
+                      darkMode ? "text-white" : "text-black"
+                    } text-base md:text-lg font-bold pl-4 md:pl-6`}
+                    dangerouslySetInnerHTML={{ __html: marked(paragraph) }}
+                  />
+                </motion.div>
+              ))}
+
             </motion.div>
           ) : (
             <p

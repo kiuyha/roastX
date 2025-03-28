@@ -116,8 +116,8 @@ class MainController extends Controller
         // only write if gemini's response is not null
         if ($previousResponse && $responseGemini){
             $previousResponse->update([
-                'response' => [ "$lang" => $responseGemini]
-            ]);
+                'response' => array_merge($previousResponse->response, ["$lang" => $responseGemini])
+            ]);            
         }else if ($responseGemini){
             PreviousResponse::create([
                 'username' => $username,

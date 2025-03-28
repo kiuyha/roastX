@@ -59,7 +59,7 @@ class MainController extends Controller
         ]);
 
         // if there's log previous response use it
-        if ($previousResponse && array_key_exists($lang, $previousResponse->response) && $previousResponse->created_at >= today()->subDays(1)) {
+        if ($previousResponse && array_key_exists($lang, $previousResponse->response[$lang]) && $previousResponse->created_at >= today()->subDays(1)) {
             $save();
             return response()->json([
                 'dataProfile' => $previousResponse->data,
@@ -77,8 +77,7 @@ class MainController extends Controller
                     'You have exceeded the daily limit of 10 times. Please try again tomorrow.' :
                     'Kamu telah melewati batas harian sebanyak 10 kali. Silahkan coba lagi besok.'
             ], 400);
-        }
-        else {
+        }else {
             $response = $this->getResponse($username, $previousResponse, $lang);
             $response['success'] ?? $save();
             return response()->json($response, ($response['success'] ? 200 : 400));
@@ -86,7 +85,7 @@ class MainController extends Controller
 
     }
 
-    private function getUserIpAdress() : string
+    protected function getUserIpAdress() : string
     {
         if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             return explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0];
@@ -95,7 +94,7 @@ class MainController extends Controller
         };
     }
 
-    private function getResponse(string $username , PreviousResponse | null $previousResponse, string $lang) : array
+    protected function getResponse(string $username , PreviousResponse | null $previousResponse, string $lang) : array
     {
         if ($previousResponse && $previousResponse->created_at >= today()->subDays(1)){
             $responseX = $previousResponse->data;
@@ -114,7 +113,8 @@ class MainController extends Controller
 
         $responseGemini = $this->getResponseGemini($username, $responseX, $lang);
 
-        if ($previousResponse) {
+        // only write if gemini's response is not null
+        if ($previousResponse && $responseGemini){
             $previousResponse->update([
                 'response' => [ "$lang" => $responseGemini]
             ]);
@@ -126,6 +126,7 @@ class MainController extends Controller
             ]);
         }
 
+        // return if gemini is null
         return [
             'dataProfile' => $responseX,
             'roastText' => $responseGemini ?? 
@@ -138,7 +139,7 @@ class MainController extends Controller
         ];
     }
 
-    private function getResponseX(string $username, string $lang) : array | string
+    protected function getResponseX(string $username, string $lang) : array|string
     {
         // I using scraping because X api is too expensive
         try{
@@ -220,7 +221,7 @@ class MainController extends Controller
         return $lang == 'en' ? 'Something went wrong' : 'Terjadi kesalahan';
     }
 
-    private function getResponseGemini(string $username, array $profileDataString, string $lang): string | null
+    protected function getResponseGemini(string $username, array $profileDataString, string $lang): string | null
     {
         // switch api key if limit exceeded
         $logQuery = ServiceLog::where('service', 'Gemini')->whereDate('created_at', today());

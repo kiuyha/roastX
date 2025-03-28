@@ -56,7 +56,8 @@ export default function Home({ lang }: { lang: string }) {
       setRoast(roastText);
       setShowResults(true);
     } catch (error) {
-      setError(error instanceof Error ? error.message : (lang == 'en' ? "Something went wrong" : "Terjadi kesalahan"));
+      setError(lang == 'en' ? "Something went wrong" : "Terjadi kesalahan");
+      console.error(error);
     } finally {
       setLoading(false);
     }

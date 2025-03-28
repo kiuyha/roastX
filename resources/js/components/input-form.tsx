@@ -111,6 +111,7 @@ export function InputForm({
                       : "bg-white text-black placeholder-black/50"
                   } border-3 md:border-4 border-black rounded-md text-base md:text-xl focus:outline-none focus:ring-4 focus:ring-black transition-all`}
                   placeholder="username"
+                  required
                 />
               </div>
             </div>

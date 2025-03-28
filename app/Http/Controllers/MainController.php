@@ -39,6 +39,12 @@ class MainController extends Controller
 
         $data = $request->all();
         $username = $data['username'];
+        if ($username == null) return response()->json([
+            'success' => false,
+            'message' => $lang == 'en' ? 
+                'Please enter a Twitter/X username.' :
+                'Silahkan masukkan username Twitter/X.'
+        ], 400);
 
         // save user log
         $ip = $this->getUserIpAdress();

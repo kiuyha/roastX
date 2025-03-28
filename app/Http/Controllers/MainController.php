@@ -59,7 +59,7 @@ class MainController extends Controller
         ]);
 
         // if there's log previous response use it
-        if ($previousResponse && array_key_exists($lang, $previousResponse->response[$lang]) && $previousResponse->created_at >= today()->subDays(1)) {
+        if ($previousResponse && array_key_exists($lang, $previousResponse->response) && $previousResponse->created_at >= today()->subDays(1)) {
             $save();
             return response()->json([
                 'dataProfile' => $previousResponse->data,

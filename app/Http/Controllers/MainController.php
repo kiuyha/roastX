@@ -39,7 +39,7 @@ class MainController extends Controller
 
         $data = $request->all();
         $username = $data['username'];
-        if ($username == null) return response()->json([
+        if (!$username || !is_string($username) ) return response()->json([
             'success' => false,
             'message' => $lang == 'en' ? 
                 'Please enter a Twitter/X username.' :

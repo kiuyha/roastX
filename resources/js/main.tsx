@@ -44,13 +44,13 @@ export default function Home({ lang }: { lang: string }) {
         body: JSON.stringify({ username }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        setError(errorData.message || (lang == 'en' ? 'Something went wrong' : 'Terjadi kesalahan'));
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        setError(data.message || (lang == 'en' ? 'Something went wrong' : 'Terjadi kesalahan'));
         return;
       }
 
-      const { dataProfile, roastText} = await response.json();
+      const { dataProfile, roastText} = data;
       // Set hasil
       setProfileData(dataProfile);
       setRoast(roastText);

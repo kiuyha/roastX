@@ -11,10 +11,12 @@ import {
   Copy,
   CheckCheck,
   Download,
+  VerifiedIcon
 } from "lucide-react";
 import type { XProfile } from "../types/index";
 import html2canvas from "html2canvas";
 import { marked } from "marked";
+import { createRoot } from "react-dom/client";
 
 interface ResultsSectionProps {
   username: string;
@@ -188,16 +190,17 @@ function ProfileCard({ username, profileData, darkMode }: ProfileCardProps) {
           )}
 
           <div className="text-center">
-            <motion.p
+            <motion.div
               className={`font-black ${
                 darkMode ? "text-white" : "text-black"
-              } text-xl md:text-3xl`}
+              } text-xl md:text-3xl flex justify-center items-center gap-2`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              @{username}
-            </motion.p>
+              <motion.p>@{username}</motion.p>
+              {profileData?.isVerified && <VerifiedIcon  className="fill-blue-500"/>}
+            </motion.div>
             {profileData?.fullName && (
               <motion.p
                 className={`${
@@ -387,12 +390,26 @@ function RoastCard({
       const usernameContainer = document.createElement("div");
       usernameContainer.style.marginLeft = "15px";
 
+      // container for username and verified icon
+      const usernameTextContainer = document.createElement("div");
+      usernameTextContainer.style.display = "flex";
+      usernameTextContainer.style.alignItems = "center";
+      usernameTextContainer.style.justifyContent = "center";
+      usernameTextContainer.style.gap = "4px";
+      
       // Username text
       const usernameText = document.createElement("div");
       usernameText.innerText = `@${username}`;
       usernameText.style.fontWeight = "bold";
       usernameText.style.fontSize = "18px";
       usernameText.style.color = darkMode ? "#ffffff" : "#000000";
+      usernameTextContainer.appendChild(usernameText);
+
+      // verified icon
+      const verifiedIcon = document.createElement("span");
+      usernameTextContainer.appendChild(verifiedIcon);
+      const rootVerifiedIcon = createRoot(verifiedIcon);
+      rootVerifiedIcon.render(<VerifiedIcon className="fill-blue-500" />);
 
       // Full name text (if available)
       if (profileData?.fullName) {
@@ -400,10 +417,10 @@ function RoastCard({
         fullNameText.innerText = profileData.fullName;
         fullNameText.style.fontSize = "14px";
         fullNameText.style.color = darkMode ? "#cccccc" : "#333333";
-        usernameContainer.appendChild(usernameText);
+        usernameContainer.appendChild(usernameTextContainer);
         usernameContainer.appendChild(fullNameText);
       } else {
-        usernameContainer.appendChild(usernameText);
+        usernameContainer.appendChild(usernameTextContainer);
       }
 
       // Append profile elements

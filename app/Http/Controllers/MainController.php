@@ -74,8 +74,8 @@ class MainController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $lang == 'en' ? 
-                    'You have exceeded the daily limit of 5 times. Please try again tomorrow.' :
-                    'Kamu telah melewati batas harian sebanyak 5 kali. Silahkan coba lagi besok.'
+                    'You have exceeded the daily limit of 10 times. Please try again tomorrow.' :
+                    'Kamu telah melewati batas harian sebanyak 10 kali. Silahkan coba lagi besok.'
             ], 400);
         }
         else {
@@ -182,11 +182,7 @@ class MainController extends Controller
             $fullname = $xpath->query('//a[@class="profile-card-fullname"]/text()')->item(0)->nodeValue ?? null;
             $bioNodes = $xpath->query('//div[@class="profile-bio"]/p')->item(0) ?? null;
             $biography = $bioNodes ? $bioNodes->ownerDocument->saveXML($bioNodes) : null;
-
-            // Checking if the profile is verified
-            $isVerifiedNode = $xpath->query('//a[@class="profile-card-fullname"]/@class')->item(0);
-            $isVerified = ($isVerifiedNode && strpos($isVerifiedNode->nodeValue, 'icon-container') !== false) ? true : false;
-
+            $isVerified = $xpath->query('//a[@class="profile-card-fullname"]/div/span')->item(0) ? true : false;
             $tweetsCount = $xpath->query('//li[@class="posts"]/span[@class="profile-stat-num"]')->item(0)->nodeValue ?? null;
             $following = $xpath->query('//li[@class="following"]/span[@class="profile-stat-num"]')->item(0)->nodeValue ?? null;
             $followers = $xpath->query('//li[@class="followers"]/span[@class="profile-stat-num"]')->item(0)->nodeValue ?? null;
@@ -208,7 +204,7 @@ class MainController extends Controller
 
             return [
                 'profilePicUrl' => "/proxy-image?url=https://nitter.net$profilePicUrl",
-                'fullname' => $fullname,
+                'fullName' => $fullname,
                 'biography' => $biography,
                 'isVerified' => $isVerified,
                 'tweetsCount' => $this->formatNumber( (int) str_replace(',', '', $tweetsCount) ),

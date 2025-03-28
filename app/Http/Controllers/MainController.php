@@ -44,7 +44,7 @@ class MainController extends Controller
             'message' => $lang == 'en' ? 
                 'Please enter a Twitter/X username.' :
                 'Silahkan masukkan username Twitter/X.'
-        ], 400);
+        ]);
 
         // save user log
         $ip = $this->getUserIpAdress();
@@ -58,7 +58,7 @@ class MainController extends Controller
                 'message' => $lang == 'en' ? 
                     'You have exceeded the daily limit of 5 times. Please try again tomorrow.' :
                     'Kamu telah melewati batas harian sebanyak 5 kali. Silahkan coba lagi besok.'
-            ], 429);
+            ]);
         }
 
         // check previous response
@@ -80,7 +80,7 @@ class MainController extends Controller
         }else{
             $response = $this->getResponse($username, $previousResponse, $lang);
             $response['success'] ?? $save();
-            return response()->json($response, ($response['success'] ? 200 : 502));
+            return response()->json($response);
         };
 
     }

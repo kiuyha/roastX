@@ -1,1 +1,0 @@
-import{r as t}from"../vendor/react-CJ2V4BqM.js";function r(){const[e,s]=t.useState(!1);return t.useEffect(()=>{window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches&&s(!0)},[]),t.useEffect(()=>{e?document.documentElement.classList.add("dark"):document.documentElement.classList.remove("dark")},[e]),{darkMode:e,setDarkMode:s}}export{r as u};

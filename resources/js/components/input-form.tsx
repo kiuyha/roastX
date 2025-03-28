@@ -215,8 +215,8 @@ function PeopleRostedCard ({ darkMode, lang }: { darkMode: boolean, lang: string
   }, []); 
 
   useEffect(() => {
-    if (roastedPeople !== previousRoastedPeople) {
-      const duration = 500; 
+    if (roastedPeople >= previousRoastedPeople) {
+      const duration = 300; 
       const stepTime = 10;
       const steps = duration / stepTime;
       const stepIncrement = (roastedPeople - previousRoastedPeople) / steps;
@@ -253,7 +253,7 @@ function PeopleRostedCard ({ darkMode, lang }: { darkMode: boolean, lang: string
       <p
         className={`font-black ${
           darkMode ? "text-white" : "text-black"
-        } text-lg md:text-2xl transition-all duration-500 ease-in-out`}
+        } text-lg md:text-2xl`}
       >
         {Math.round(previousRoastedPeople)}
       </p>

@@ -11,6 +11,7 @@
     <link preload href="/roastxlogo.webp" type="image/webp">
     @vite(['resources/js/app.tsx', 'resources/css/app.css'])
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>    
     <div id="app" data-lang="{{ $lang }}"></div>

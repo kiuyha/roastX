@@ -8,7 +8,7 @@ import {
   Sparkles,
   User,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 interface InputFormProps {
   username: string;
@@ -189,53 +189,65 @@ export function InputForm({
 function PeopleRostedCard ({ darkMode, lang }: { darkMode: boolean, lang: string }) {
   const [roastedPeople, setRoastedPeople] = useState<number>(0);
   const [previousRoastedPeople, setPreviousRoastedPeople] = useState<number>(0);
+  const [isCounting, setIsCounting] = useState<boolean>(false);
 
-  const updatePeopleRoasted = async () => {
-    const fetchRoastedPeople = async () => {
-      try {
-        const response = await fetch(`/people-roasted`);
-        if (!response.ok) {
-          console.error("Failed to update people roasted count");
-          return;
-        }
-        const data = await response.json();
-        setPreviousRoastedPeople(roastedPeople);
-        setRoastedPeople(data.roastedPeople); 
-      } catch (error) {
-        console.error("Error fetching roasted people:", error);
+  const fetchRoastedPeople = async () => {
+    try {
+      const response = await fetch(`/people-roasted`);
+      if (!response.ok) {
+        console.error("Failed to update people roasted count");
+        return;
       }
-    };
-    fetchRoastedPeople(); // Initial fetch
-    const interval = setInterval(fetchRoastedPeople, 8000); 
-    return () => clearInterval(interval);
+      const data = await response.json();
+      setPreviousRoastedPeople(roastedPeople);
+      setRoastedPeople(data.roastedPeople); 
+    } catch (error) {
+      console.error("Error fetching roasted people:", error);
+    }
   };
 
   useEffect(() => {
-    updatePeopleRoasted(); 
-  }, []); 
+    fetchRoastedPeople();
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!isCounting) {
+        fetchRoastedPeople();
+      }
+    }, 5000); 
+    return () => clearInterval(interval);
+  }, [isCounting]);
 
   useEffect(() => {
     if (roastedPeople > previousRoastedPeople) {
-      const duration = 300; 
+      const duration = 500;
       const stepTime = 10;
       const steps = duration / stepTime;
-      const stepIncrement = (roastedPeople - previousRoastedPeople) / steps;
-
+      const startValue = previousRoastedPeople;
+      const targetValue = roastedPeople;
+      const stepIncrement = (targetValue - startValue) / steps;
       let currentStep = 0;
-
       const countUpInterval = setInterval(() => {
-        setPreviousRoastedPeople((prev) => prev + stepIncrement);
         currentStep += 1;
-
+        setIsCounting(true);
+        
         if (currentStep >= steps) {
           clearInterval(countUpInterval);
-          setPreviousRoastedPeople(roastedPeople); 
+          setPreviousRoastedPeople(targetValue);
+          setTimeout(() => {
+            setIsCounting(false);
+          }, 1000);
+        } else {
+          setPreviousRoastedPeople((prev) => prev + stepIncrement);
         }
       }, stepTime);
-
-      return () => clearInterval(countUpInterval);
+  
+      return () => {
+        clearInterval(countUpInterval);
+      };
     }
-  }, [roastedPeople, previousRoastedPeople]);
+  }, [roastedPeople, previousRoastedPeople]); 
 
   return (
     roastedPeople > 0 &&

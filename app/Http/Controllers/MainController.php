@@ -190,16 +190,18 @@ class MainController extends Controller
 
             // Scraping tweets and their details
             $tweets = [];
-            foreach ($xpath->query('//div[@class="timeline-item"]') as $idx => $tweet) {
+            foreach ($xpath->query('//div[@class="timeline-item "]') as $idx => $tweet) {
+                Log::info('Scraping tweet');
                 if ($idx >= 5) break;
+                $captionNode = $xpath->query('.//div[@class="tweet-content media-body"]', $tweet)->item(0) ?? null;
                                         
                 $tweets[] = [
                     'date' => $xpath->query('.//span[@class="tweet-date"]/a/@title', $tweet)->item(0)->nodeValue ?? null,
-                    'likesCount' => $xpath->query('.//div[.//span[@class="icon-heart"]]/text()', $tweet)->item(0)->nodeValue ?? null,
-                    'retweetCount' => $xpath->query('.//div[.//span[@class="icon-retweet"]]/text()', $tweet)->item(0)->nodeValue ?? null,
-                    'commentsCount' => $xpath->query('.//div[.//span[@class="icon-comment"]]/text()', $tweet)->item(0)->nodeValue ?? null,
-                    'quoteCount' => $xpath->query('.//div[.//span[@class="icon-quote"]]/text()', $tweet)->item(0)->nodeValue ?? null,
-                    'caption' => $xpath->query('.//tweet-content/text()', $tweet)->item(0)->nodeValue ?? null,
+                    'likesCount' => $xpath->query('.//span[@class="tweet-stat"]//div[@class="icon-container"]/span[@class="icon-heart"]/following-sibling::text()', $tweet)->item(0)->nodeValue ?? null,
+                    'retweetCount' => $xpath->query('.//span[@class="tweet-stat"]//div[@class="icon-container"]/span[@class="icon-retweet"]/following-sibling::text()', $tweet)->item(0)->nodeValue ?? null,
+                    'commentsCount' => $xpath->query('.//span[@class="tweet-stat"]//div[@class="icon-container"]/span[@class="icon-comment"]/following-sibling::text()', $tweet)->item(0)->nodeValue ?? null,
+                    'commentsCount' => $xpath->query('.//span[@class="tweet-stat"]//div[@class="icon-container"]/span[@class="icon-quote"]/following-sibling::text()', $tweet)->item(0)->nodeValue ?? null,
+                    'caption' => $captionNode ? $captionNode->ownerDocument->saveXML($captionNode) : null
                 ];
             }
 
@@ -319,5 +321,11 @@ class MainController extends Controller
             Log::error('Error proxying image: ' . $e->getMessage());
             return response("Failed to proxy image", 500);
         }
+    }
+
+    public function getPeopleRoasted(Request $request): JsonResponse
+    {
+        $peopleRoasted = PreviousResponse::count();
+        return response()->json(['roastedPeople' => $peopleRoasted]);
     }
 }

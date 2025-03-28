@@ -6,7 +6,9 @@ import {
   ArrowRight,
   Zap,
   Sparkles,
+  User,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface InputFormProps {
   username: string;
@@ -58,6 +60,8 @@ export function InputForm({
           { lang === "en" ? "Roasting your X account, ready to ignite your mind?" : "Roasting akun X-mu, siap kena mental? 💀"}
         </p>
       </motion.div>
+
+      <PeopleRostedCard darkMode={darkMode} lang={lang}/>
 
       <motion.div
         className={`${
@@ -181,6 +185,90 @@ export function InputForm({
     </motion.div>
   );
 }
+
+function PeopleRostedCard ({ darkMode, lang }: { darkMode: boolean, lang: string }) {
+  const [roastedPeople, setRoastedPeople] = useState<number>(0);
+  const [previousRoastedPeople, setPreviousRoastedPeople] = useState<number>(0);
+
+  const updatePeopleRoasted = async () => {
+    const fetchRoastedPeople = async () => {
+      try {
+        const response = await fetch(`/people-roasted`);
+        if (!response.ok) {
+          console.error("Failed to update people roasted count");
+          return;
+        }
+        const data = await response.json();
+        setPreviousRoastedPeople(roastedPeople);
+        setRoastedPeople(data.roastedPeople); 
+      } catch (error) {
+        console.error("Error fetching roasted people:", error);
+      }
+    };
+    fetchRoastedPeople(); // Initial fetch
+    const interval = setInterval(fetchRoastedPeople, 8000); 
+    return () => clearInterval(interval);
+  };
+
+  useEffect(() => {
+    updatePeopleRoasted(); 
+  }, []); 
+
+  useEffect(() => {
+    if (roastedPeople !== previousRoastedPeople) {
+      const duration = 500; 
+      const stepTime = 10;
+      const steps = duration / stepTime;
+      const stepIncrement = (roastedPeople - previousRoastedPeople) / steps;
+
+      let currentStep = 0;
+
+      const countUpInterval = setInterval(() => {
+        setPreviousRoastedPeople((prev) => prev + stepIncrement);
+        currentStep += 1;
+
+        if (currentStep >= steps) {
+          clearInterval(countUpInterval);
+          setPreviousRoastedPeople(roastedPeople); 
+        }
+      }, stepTime);
+
+      return () => clearInterval(countUpInterval);
+    }
+  }, [roastedPeople, previousRoastedPeople]);
+
+  return (
+    roastedPeople > 0 &&
+    <motion.div
+      className={`flex items-center gap-2 md:gap-4 ${
+        darkMode ? "bg-zinc-800" : "bg-white"
+      } mb-5 md:mb-10 border-3 md:border-4 border-black rounded-md p-2 md:p-3 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`}
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      whileHover={{ y: -5 }}
+    >
+      <User className={`
+        ${darkMode ? "fill-white" : "fill-black"} 
+        w-6 h-6 md:w-8 md:h-8`} />
+      <p
+        className={`font-black ${
+          darkMode ? "text-white" : "text-black"
+        } text-lg md:text-2xl transition-all duration-500 ease-in-out`}
+      >
+        {Math.round(previousRoastedPeople)}
+      </p>
+      <p
+        className={`${
+          darkMode ? "text-gray-300" : "text-black"
+        } text-sm md:text-base`}
+      >
+        {roastedPeople > 1 ?
+          (lang == "en" ? "people have been roasted" : "orang telah diroasting")
+          : ( lang == "en" ? "person has been roasted" : "orang telah diroasting")}
+      </p>
+    </motion.div>
+  );
+};
 
 function FeatureSection({ darkMode, lang }: { darkMode: boolean, lang: string }) {
   return (

@@ -60,13 +60,14 @@ export default function Home({ lang }: { lang: string }) {
       setProfileData(dataProfile);
       setRoast(roastText);
       setShowResults(true);
+      setError(null);
     } catch (error) {
       setError(lang == 'en' ? "Something went wrong" : "Terjadi kesalahan");
       console.error(error);
       input?.focus();
     } finally {
       setLoading(false);
-    }
+    } 
   };
 
   const resetForm = () => {

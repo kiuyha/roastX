@@ -198,10 +198,10 @@ class MainController extends Controller
                 $tweets[] = [
                     'date' => $xpath->query('.//span[@class="tweet-date"]/a/@title', $tweet)->item(0)->nodeValue ?? null,
                     'isRetweeted' => $xpath->query('.//div[@class="retweet-header"]', $tweet)->item(0) ? true : false,
-                    'likesCount' => $xpath->query('.//span[@class="tweet-stat"]//div[@class="icon-container"]/span[@class="icon-heart"]/following-sibling::text()', $tweet)->item(0)->nodeValue ?? null,
-                    'retweetCount' => $xpath->query('.//span[@class="tweet-stat"]//div[@class="icon-container"]/span[@class="icon-retweet"]/following-sibling::text()', $tweet)->item(0)->nodeValue ?? null,
-                    'commentsCount' => $xpath->query('.//span[@class="tweet-stat"]//div[@class="icon-container"]/span[@class="icon-comment"]/following-sibling::text()', $tweet)->item(0)->nodeValue ?? null,
-                    'commentsCount' => $xpath->query('.//span[@class="tweet-stat"]//div[@class="icon-container"]/span[@class="icon-quote"]/following-sibling::text()', $tweet)->item(0)->nodeValue ?? null,
+                    'likesCount' => $xpath->query('.//span[@class="tweet-stat"]//div[@class="icon-container"]/span[@class="icon-heart"]/following-sibling::text()', $tweet)->item(0)->nodeValue ?? 0,
+                    'retweetCount' => $xpath->query('.//span[@class="tweet-stat"]//div[@class="icon-container"]/span[@class="icon-retweet"]/following-sibling::text()', $tweet)->item(0)->nodeValue ?? 0,
+                    'commentsCount' => $xpath->query('.//span[@class="tweet-stat"]//div[@class="icon-container"]/span[@class="icon-comment"]/following-sibling::text()', $tweet)->item(0)->nodeValue ?? 0,
+                    'commentsCount' => $xpath->query('.//span[@class="tweet-stat"]//div[@class="icon-container"]/span[@class="icon-quote"]/following-sibling::text()', $tweet)->item(0)->nodeValue ?? 0,
                     'caption' => $captionNode ? $captionNode->ownerDocument->saveXML($captionNode) : null
                 ];
             }

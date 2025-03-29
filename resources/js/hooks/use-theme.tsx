@@ -15,7 +15,6 @@ export function useTheme() {
     // Listen for system theme changes
     const handleThemeChange = (e : any) => {
       setDarkMode(e.matches);
-      localStorage.pop('theme');
     };
     mediaQuery.addEventListener("change", handleThemeChange);
     return () => mediaQuery.removeEventListener("change", handleThemeChange);

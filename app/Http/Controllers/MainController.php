@@ -206,7 +206,7 @@ class MainController extends Controller
             }
 
             return [
-                'profilePicUrl' => "/proxy-image?url=https://nitter.net$profilePicUrl",
+                'profilePicUrl' => env('APP_URL') . "/proxy-image?url=https://nitter.net$profilePicUrl",
                 'fullName' => $fullname,
                 'biography' => $biography,
                 'isVerified' => $isVerified,

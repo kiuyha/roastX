@@ -41,12 +41,15 @@ class MainController extends Controller
 
         $data = $request->all();
         $username = $data['username'];
-        if (!$username || !is_string($username) ) return response()->json([
-            'success' => false,
-            'message' => $lang == 'en' ? 
-                'Please enter a Twitter/X username.' :
-                'Silahkan masukkan username Twitter/X.'
-        ], 400);
+        
+        if (!$username || !is_string($username)){
+            return response()->json([
+                'success' => false,
+                'message' => $lang == 'en' ? 
+                    'Please enter a Twitter/X username.' :
+                    'Silahkan masukkan username Twitter/X.'
+            ], 400);
+        } 
 
         // save user log
         $ip = $this->getUserIpAdress();
@@ -96,14 +99,14 @@ class MainController extends Controller
 
     protected function getResponse(string $username , PreviousResponse | null $previousResponse, string $lang) : array
     {
-        if ($previousResponse && $previousResponse->created_at >= today()->subDays(1)){
-            $responseX = $previousResponse->data;
-        }else if($previousResponse){
+        // delete data if it's older than 1 day
+        if ($previousResponse && $previousResponse->created_at < today()->subDays(1)){
             $previousResponse->delete();
             $previousResponse = null;
         }
 
-        $responseX = $this->getResponseX($username, $lang);
+        $responseX = $previousResponse->data ?? $this->getResponseX($username, $lang);
+
         if (is_string($responseX)) {
             return [
                 'success' => false,
@@ -114,19 +117,20 @@ class MainController extends Controller
         $responseGemini = $this->getResponseGemini($username, $responseX, $lang);
 
         // only write if gemini's response is not null
-        if ($previousResponse && $responseGemini){
-            $previousResponse->update([
-                'response' => array_merge($previousResponse->response, ["$lang" => $responseGemini])
-            ]);            
-        }else if ($responseGemini){
-            PreviousResponse::create([
-                'username' => $username,
-                'data' => $responseX,
-                'response' => [ "$lang" => $responseGemini]
-            ]);
+        if ($responseGemini){
+            if ($previousResponse){
+                $previousResponse->update([
+                    'response' => array_merge($previousResponse->response, ["$lang" => $responseGemini])
+                ]);            
+            }else{
+                PreviousResponse::create([
+                    'username' => $username,
+                    'data' => $responseX,
+                    'response' => [ "$lang" => $responseGemini]
+                ]);
+            }
         }
 
-        // return if gemini is null
         return [
             'dataProfile' => $responseX,
             'roastText' => $responseGemini ?? 

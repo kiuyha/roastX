@@ -27,6 +27,10 @@ export default function Home({ lang }: { lang: string }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const input = e.currentTarget.querySelector('input');
+    if (input instanceof HTMLInputElement) {
+      input.blur();
+    }
 
     try {
       setLoading(true);
@@ -47,6 +51,7 @@ export default function Home({ lang }: { lang: string }) {
       const data = await response.json();
       if (!response.ok || !data.success) {
         setError(data.message || (lang == 'en' ? 'Something went wrong' : 'Terjadi kesalahan'));
+        input?.focus();
         return;
       }
 
@@ -58,6 +63,7 @@ export default function Home({ lang }: { lang: string }) {
     } catch (error) {
       setError(lang == 'en' ? "Something went wrong" : "Terjadi kesalahan");
       console.error(error);
+      input?.focus();
     } finally {
       setLoading(false);
     }

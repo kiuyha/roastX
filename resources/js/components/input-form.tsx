@@ -186,7 +186,7 @@ export function InputForm({
   );
 }
 
-function updateRoastedPeople() {
+function updateRoastedPeople(lang: string) {
   const [roastedPeople, setRoastedPeople] = useState<number>(0);
   const [previousRoastedPeople, setPreviousRoastedPeople] = useState<number>(0);
   const [isCounting, setIsCounting] = useState<boolean>(false);
@@ -206,10 +206,26 @@ function updateRoastedPeople() {
     }
   };
 
+  const formatNumber = (number: number): string => {
+    if (number < 1000) {
+      return number.toString();
+    }else if(number < 1000000){
+      return lang == "en" ? 
+      (number / 1000).toFixed(1) + "K" :
+      (number / 1000).toFixed(1).replace(".", ",") + "K";
+    }else{
+      return lang == "en" ?
+      (number / 1000000).toFixed(1) + "M" :
+      (number / 1000000).toFixed(1).replace(".", ",") + "Jt";
+    }
+  }
+
+  // calling fetchRoastedPeople on component mount
   useEffect(() => {
     fetchRoastedPeople();
   }, []);
 
+  // calling fetchRoastedPeople every 5 seconds only if not counting
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isCounting) {
@@ -219,8 +235,9 @@ function updateRoastedPeople() {
     return () => clearInterval(interval);
   }, [isCounting]);
 
+  // updating roasted people
   useEffect(() => {
-    if (roastedPeople > previousRoastedPeople) {
+    if (formatNumber(roastedPeople) !== formatNumber(previousRoastedPeople)) {
       const duration = 500;
       const stepTime = 10;
       const steps = duration / stepTime;
@@ -228,6 +245,8 @@ function updateRoastedPeople() {
       const targetValue = roastedPeople;
       const stepIncrement = (targetValue - startValue) / steps;
       let currentStep = 0;
+
+      // set interval to update roasted people
       const countUpInterval = setInterval(() => {
         currentStep += 1;
         setIsCounting(true);
@@ -247,13 +266,14 @@ function updateRoastedPeople() {
         clearInterval(countUpInterval);
       };
     }
-  }, [roastedPeople, previousRoastedPeople]);
+  }, [roastedPeople]);
 
-  return {roastedPeople, previousRoastedPeople};
+  const formattedPreviousRoastedPeople = formatNumber(Math.round(previousRoastedPeople)); 
+  return {formattedPreviousRoastedPeople, roastedPeople};
 }
 
 function PeopleRostedCard ({ darkMode, lang }: { darkMode: boolean, lang: string }) {
-  const { roastedPeople, previousRoastedPeople } = updateRoastedPeople();
+  const { formattedPreviousRoastedPeople, roastedPeople } = updateRoastedPeople(lang);
 
   return (
     roastedPeople > 0 &&
@@ -273,7 +293,7 @@ function PeopleRostedCard ({ darkMode, lang }: { darkMode: boolean, lang: string
           darkMode ? "text-white" : "text-black"
         } text-lg md:text-2xl`}
       >
-        {Math.round(previousRoastedPeople)}
+        {formattedPreviousRoastedPeople}
       </p>
       <p
         className={`${

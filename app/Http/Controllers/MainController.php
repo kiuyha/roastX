@@ -177,6 +177,11 @@ class MainController extends Controller
             @$dom->loadHTML(mb_convert_encoding($body, 'HTML-ENTITIES', 'UTF-8'));
             $xpath = new DOMXPath($dom);
 
+            // Checking if the profile exists
+            $errorMsg = $xpath->query('//div[@class="error-panel"]/span/text()')->item(0);
+            if ($errorMsg) {
+                return $errorMsg->nodeValue;
+            }
 
             // Extracting profile information
             $profilePicUrl = $xpath->query('//a[@class="profile-card-avatar"]/@href')->item(0)->nodeValue ?? null;

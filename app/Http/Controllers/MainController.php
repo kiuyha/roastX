@@ -97,7 +97,7 @@ class MainController extends Controller
         };
     }
 
-    protected function getResponse(string $username , PreviousResponse | null $previousResponse, string $lang) : array
+    protected function getResponse(string $username , ?PreviousResponse $previousResponse, string $lang) : array
     {
         // delete data if it's older than 1 day
         if ($previousResponse && $previousResponse->created_at < today()->subDays(1)){
@@ -148,28 +148,11 @@ class MainController extends Controller
         // I using scraping because X api is too expensive
         try{
             // use curl because the Http not working properly with nitter
-            $curl = curl_init();
-            curl_setopt_array($curl, [
-                CURLOPT_URL => "https://nitter.net/$username",
-                CURLOPT_ENCODING => "",
-                CURLOPT_RETURNTRANSFER => true,  // Ensure response is returned as a string
-                CURLOPT_HEADER => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,
-                CURLOPT_CUSTOMREQUEST => "GET",
-                CURLOPT_HTTPHEADER => [
-                  'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-                  'Accept-Language: en-US,en;q=0.5',
-                ], // Include headers in the response
-              ]);           
-
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
-            $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-            
-            $headerSize = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
-            $body = substr($response, $headerSize);
-            
-            curl_close($curl);
+            [$body, $err, $http_code]  =$this->curlRequest(
+                isPost:false,
+                url:"https://nitter.net/$username",
+                encoding:true
+            );
             if($err) {
                 Log::error("1. Error X response: $err");
                 return $lang == 'en' ? 'Something went wrong' : 'Terjadi kesalahan';
@@ -200,7 +183,6 @@ class MainController extends Controller
             // Scraping tweets and their details
             $tweets = [];
             foreach ($xpath->query('//div[@class="timeline-item "]') as $idx => $tweet) {
-                Log::info('Scraping tweet');
                 if ($idx >= 5) break;
                 $captionNode = $xpath->query('.//div[@class="tweet-content media-body"]', $tweet)->item(0) ?? null;
                                         
@@ -233,7 +215,7 @@ class MainController extends Controller
         return $lang == 'en' ? 'Something went wrong' : 'Terjadi kesalahan';
     }
 
-    protected function getResponseGemini(string $username, array $profileDataString, string $lang): string | null
+    protected function getResponseGemini(string $username, array $profileDataString, string $lang): ?string
     {
         // switch api key if limit exceeded
         $logQuery = ServiceLog::where('service', 'Gemini')->whereDate('created_at', today());
@@ -248,35 +230,40 @@ class MainController extends Controller
 
         try{
             $profileDataString = json_encode($profileDataString);
-            $responseGemini = Http::post("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$apiKey",
-            [
-                'contents' => [
-                    [
-                        'parts' => [
-                            [
-                                'text' => $lang == 'en'?
-
-                                "Give a sarcastic, humiliating, and funny (but not too harsh) roast for Twitter/X profile \"{$username}\".
-                                IMPORTANT: Give ONLY text roast, without any opening or closing words like \"Ok, ready\" or \"Here's the roast for\". Just start with the roast.
-                                Occasionally use emoticon.
-                                Use **sarcastic and humiliating** until it gets mental,
-                                Use slang language, you can use vulgar words but don't go overboard,
-                                use words that can be understood based on the following data: {$profileDataString}" :
-
-                                "Berikan roasting sarkastik, kejam, dan menyindir secara lucu (tapi tidak terlalu kasar) untuk profil Twitter/X \"{$username}\" ini. 
-                                PENTING: Berikan HANYA teks roasting, tanpa kata pengantar atau pembuka apapun seperti \"Oke, siap\" atau \"Berikut roasting untuk\". Langsung mulai dengan roastingnya.
-                                sesekali gunakan emoticon.
-                                Gunakan **gaya sarkastik dan menyakitkan** sampai kena mental,
-                                Gunakan Bahasa Gaul, boleh menggunakan kata kata kasar tapi jangan berlebihan,
-                                gunakan kata kata yang bisa dipahami.
-                                Boleh menyindir jumlah followers, tweet, bio, gaya foto, atau apapun yang relevan berdasarkan data berikut: {$profileDataString}",
+            [$body, $err, $http_code] = $this->curlRequest(
+                isPost: true,
+                url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$apiKey",
+                encoding: true,
+                payload:
+                [
+                    'contents' => [
+                        [
+                            'parts' => [
+                                [
+                                    'text' => $lang == 'en'?
+    
+                                    "Give a sarcastic, humiliating, and funny (but not too harsh) roast for Twitter/X profile \"{$username}\".
+                                    IMPORTANT: Give ONLY text roast, without any opening or closing words like \"Ok, ready\" or \"Here's the roast for\". Just start with the roast.
+                                    Occasionally use emoticon.
+                                    Use **sarcastic and humiliating** until it gets mental,
+                                    Use slang language, you can use vulgar words but don't go overboard,
+                                    use words that can be understood based on the following data: {$profileDataString}" :
+    
+                                    "Berikan roasting sarkastik, kejam, dan menyindir secara lucu (tapi tidak terlalu kasar) untuk profil Twitter/X \"{$username}\" ini. 
+                                    PENTING: Berikan HANYA teks roasting, tanpa kata pengantar atau pembuka apapun seperti \"Oke, siap\" atau \"Berikut roasting untuk\". Langsung mulai dengan roastingnya.
+                                    sesekali gunakan emoticon.
+                                    Gunakan **gaya sarkastik dan menyakitkan** sampai kena mental,
+                                    Gunakan Bahasa Gaul, boleh menggunakan kata kata kasar tapi jangan berlebihan,
+                                    gunakan kata kata yang bisa dipahami.
+                                    Boleh menyindir jumlah followers, tweet, bio, gaya foto, atau apapun yang relevan berdasarkan data berikut: {$profileDataString}",
+                                ],
                             ],
                         ],
                     ],
-                ],
-            ]);
-            if ($responseGemini->failed()) {
-                Log::error("1. Error get response Gemini, error: " . $responseGemini->status() . " " . json_encode($responseGemini->body()));
+                ]
+            );
+            if ($err || $http_code != 200) {
+                Log::error("1. Error get response Gemini, error: " . $http_code . " " . $err);
                 return null;
             };
             ServiceLog::create(['service' => 'Gemini']);
@@ -284,7 +271,7 @@ class MainController extends Controller
             Log::error("2. Error get response Gemini, error: " . $e->getCode() . " " . $e->getMessage());
             return null;
         };
-        return $responseGemini->json()['candidates'][0]['content']['parts'][0]['text'] ?? null;
+        return json_decode($body, true)['candidates'][0]['content']['parts'][0]['text'] ?? null;
     }
 
     protected function formatNumber(int $number): string
@@ -311,18 +298,15 @@ class MainController extends Controller
 
         // Try to fetch the image content
         try {
-            $response = Http::get($imageUrl);
-
-            if (!$response->successful()) {
-                return response("Failed to fetch image", $response->status());
-            }
-
-            // Get the content type of the image
-            $contentType = $response->header('Content-Type', 'image/jpeg');
+            // using curl because it more faster than Http
+            [$body, $err, $http_code, $headerValue] = $this->curlRequest(isPost:false, url:$imageUrl, headerKey:'Content-Type');
+            if ($err || $http_code != 200) {
+                return response("Failed to fetch image", $http_code);
+            }    
 
             // Return the image with the appropriate content type
-            return Response::make($response->body(), 200, [
-                'Content-Type' => $contentType,
+            return Response::make($body, 200, [
+                'Content-Type' => $headerValue ?? 'image/jpeg',
                 'Cache-Control' => 'public, max-age=86400', // Cache for 1 day
             ]);
 
@@ -337,5 +321,46 @@ class MainController extends Controller
     {
         $peopleRoasted = PreviousResponse::count();
         return response()->json(['roastedPeople' => $peopleRoasted]);
+    }
+
+    protected function curlRequest(bool $isPost, string $url, ?string $headerKey=null ,bool $encoding = false, ?array $payload = null): array
+    { 
+        $curl = curl_init();
+        $headerValue = null;
+
+        $curlOptions = [
+            CURLOPT_URL => $url,
+            CURLOPT_ENCODING => $encoding ? "" : "identity",
+            CURLOPT_RETURNTRANSFER => true,  // Ensure response is returned as a string
+            CURLOPT_HEADER => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0, // Use HTTP/2
+            CURLOPT_HTTPHEADER => [
+                'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                'Accept-Language: en-US,en;q=0.5',
+            ], // Include headers in the request
+        ];
+
+        if ($headerKey) {
+            $curlOptions[CURLOPT_HEADERFUNCTION] = function($curl, $header) use (&$headerValue, $headerKey) {
+                if (stripos($header, $headerKey . ':') === 0) {
+                    $headerValue = trim(substr($header, strlen($headerKey) + 1));
+                }
+                return strlen($header);
+            };
+        }
+
+        if ($isPost) {
+            $curlOptions[CURLOPT_POST] = true;
+            $curlOptions[CURLOPT_POSTFIELDS] = json_encode($payload);
+            $curlOptions[CURLOPT_HTTPHEADER][] = 'Content-Type: application/json';
+        }
+        curl_setopt_array($curl, $curlOptions);
+
+        $body = curl_exec($curl);
+        $err = curl_error($curl);
+        $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        
+        curl_close($curl);
+        return [$body, $err, $http_code, $headerValue];
     }
 }

@@ -14,7 +14,7 @@ export function Header({ showResults, resetForm, darkMode }: HeaderProps) {
       className={`fixed top-0 left-0 w-full z-10 py-3 md:py-4 px-4 md:px-6 ${
         darkMode
           ? "bg-zinc-900/90 backdrop-blur-sm"
-          : "bg-[#FF5F1F]/90 backdrop-blur-sm"
+          : "bg-gray-300/90 backdrop-blur-sm"
       } transition-colors duration-300`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -37,7 +37,7 @@ export function Header({ showResults, resetForm, darkMode }: HeaderProps) {
           {showResults && (
             <motion.button
               onClick={resetForm}
-              className={`${darkMode ? "bg-red-500" : "bg-red-500"} ${
+              className={`${darkMode ? "bg-red-500" : "bg-red-400"} ${
                 darkMode ? "text-white" : "text-black"
               } font-bold px-3 py-1.5 md:px-4 md:py-2 border-3 md:border-4 border-black rounded-md shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center gap-1 md:gap-2 text-sm md:text-base`}
               whileHover={{

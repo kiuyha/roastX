@@ -93,7 +93,7 @@ export default function Home({ lang }: { lang: string }) {
   return (
     <main
       className={`min-h-screen font-mono overflow-x-hidden transition-colors duration-300 ${
-        darkMode ? "bg-zinc-900" : "bg-[#FF5F1F]"
+        darkMode ? "bg-zinc-900" : "bg-gray-200"
       } relative`}
     >
       <BackgroundPattern darkMode={darkMode} />

@@ -35,8 +35,8 @@
       "_motion-dom-Di8Hrc7E.js"
     ]
   },
-  "_header.tsx-C7k_UldF.js": {
-    "file": "assets/js/components/header.tsx-C7k_UldF.js",
+  "_header.tsx-CStdh5Ap.js": {
+    "file": "assets/js/components/header.tsx-CStdh5Ap.js",
     "name": "js/components/header.tsx",
     "imports": [
       "_react-CJ2V4BqM.js",
@@ -139,12 +139,12 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-BrE2H2w9.css",
+    "file": "assets/app-BWvvo6Wv.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.tsx": {
-    "file": "assets/app-CRkP9ZsT.js",
+    "file": "assets/app-Ba-zTzHr.js",
     "name": "app",
     "src": "resources/js/app.tsx",
     "isEntry": true,
@@ -160,7 +160,7 @@
       "_motion-utils-BDWe_Wef.js",
       "_motion-dom-Di8Hrc7E.js",
       "_lucide-react-D5e_nBrO.js",
-      "_header.tsx-C7k_UldF.js",
+      "_header.tsx-CStdh5Ap.js",
       "_input-form.tsx-0nhgnljW.js",
       "_results-section.tsx-joyOMZkf.js",
       "_html2canvas-BfYXEYrK.js",
@@ -183,14 +183,14 @@
     ]
   },
   "resources/js/main.tsx": {
-    "file": "assets/main-C6-oQbdP.js",
+    "file": "assets/main-CqEvvWVf.js",
     "name": "main",
     "src": "resources/js/main.tsx",
     "isEntry": true,
     "imports": [
       "_react-CJ2V4BqM.js",
       "_theme-toggle.tsx-Bzj9N4G4.js",
-      "_header.tsx-C7k_UldF.js",
+      "_header.tsx-CStdh5Ap.js",
       "_input-form.tsx-0nhgnljW.js",
       "_results-section.tsx-joyOMZkf.js",
       "_loading-overlay.tsx-DStE172z.js",

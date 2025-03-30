@@ -1,28 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaGithub, FaInstagram } from "react-icons/fa";
 
-export default function Footer() {
-  const [darkMode, setDarkMode] = useState(false);
-
-  // Initialize dark mode based on user preference
-  useEffect(() => {
-    if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      setDarkMode(true);
-    }
-  }, []);
-
-  // Apply dark mode class to body
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode]);
-
+export default function Footer({ darkMode }: { darkMode: boolean }) {
   return (
     <footer className={`w-full py-6 px-4 flex items-center justify-between`}>
       <p

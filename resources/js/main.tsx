@@ -137,7 +137,7 @@ export default function Home({ lang }: { lang: string }) {
         </div>
       </div>
 
-      <Footer />
+      <Footer darkMode={darkMode} />
     </main>
   );
 }

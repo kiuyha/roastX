@@ -18,8 +18,8 @@
       "_framer-motion-CLzqDuJ2.js"
     ]
   },
-  "_footer.tsx-DhBaJyLG.js": {
-    "file": "assets/js/components/footer.tsx-DhBaJyLG.js",
+  "_footer.tsx-CpSMMdsD.js": {
+    "file": "assets/js/components/footer.tsx-CpSMMdsD.js",
     "name": "js/components/footer.tsx",
     "imports": [
       "_react-CJ2V4BqM.js",
@@ -139,12 +139,12 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-BWvvo6Wv.css",
+    "file": "assets/app-CBN6oEy2.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.tsx": {
-    "file": "assets/app-Ba-zTzHr.js",
+    "file": "assets/app-BYOBDjyI.js",
     "name": "app",
     "src": "resources/js/app.tsx",
     "isEntry": true,
@@ -169,7 +169,7 @@
       "_use-theme.tsx-D1AMQvHO.js",
       "_background-pattern.tsx-DDgm4IlE.js",
       "_decoration-elements.tsx-BFXgMZip.js",
-      "_footer.tsx-DhBaJyLG.js",
+      "_footer.tsx-CpSMMdsD.js",
       "_react-icons-sX9L970i.js"
     ]
   },
@@ -183,7 +183,7 @@
     ]
   },
   "resources/js/main.tsx": {
-    "file": "assets/main-CqEvvWVf.js",
+    "file": "assets/main-DZ8hrUth.js",
     "name": "main",
     "src": "resources/js/main.tsx",
     "isEntry": true,
@@ -197,7 +197,7 @@
       "_use-theme.tsx-D1AMQvHO.js",
       "_background-pattern.tsx-DDgm4IlE.js",
       "_decoration-elements.tsx-BFXgMZip.js",
-      "_footer.tsx-DhBaJyLG.js",
+      "_footer.tsx-CpSMMdsD.js",
       "_framer-motion-CLzqDuJ2.js",
       "_lucide-react-D5e_nBrO.js",
       "_html2canvas-BfYXEYrK.js",

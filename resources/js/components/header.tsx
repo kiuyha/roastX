@@ -63,8 +63,6 @@ export function Header({ showResults, resetForm, darkMode }: HeaderProps) {
     </motion.header>
   );
 }
-
-
 function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
   const languages: Record<string, string> = {

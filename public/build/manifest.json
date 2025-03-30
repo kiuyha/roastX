@@ -18,6 +18,18 @@
       "_framer-motion-CLzqDuJ2.js"
     ]
   },
+  "_error.tsx-COjbnRJW.js": {
+    "file": "assets/js/js/error.tsx-COjbnRJW.js",
+    "name": "js/js/error.tsx",
+    "imports": [
+      "_react-CJ2V4BqM.js",
+      "_background-pattern.tsx-DDgm4IlE.js",
+      "_theme-toggle.tsx-Bzj9N4G4.js",
+      "_use-theme.tsx-D1AMQvHO.js",
+      "_footer.tsx-CpSMMdsD.js",
+      "_framer-motion-CLzqDuJ2.js"
+    ]
+  },
   "_footer.tsx-CpSMMdsD.js": {
     "file": "assets/js/components/footer.tsx-CpSMMdsD.js",
     "name": "js/components/footer.tsx",
@@ -106,8 +118,8 @@
       "_react-CJ2V4BqM.js"
     ]
   },
-  "_results-section.tsx-joyOMZkf.js": {
-    "file": "assets/js/components/results-section.tsx-joyOMZkf.js",
+  "_results-section.tsx-B0ocaf16.js": {
+    "file": "assets/js/components/results-section.tsx-B0ocaf16.js",
     "name": "js/components/results-section.tsx",
     "imports": [
       "_react-CJ2V4BqM.js",
@@ -139,12 +151,12 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-CBN6oEy2.css",
+    "file": "assets/app-DaZTAj_B.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.tsx": {
-    "file": "assets/app-BYOBDjyI.js",
+    "file": "assets/app-B7Ax928u.js",
     "name": "app",
     "src": "resources/js/app.tsx",
     "isEntry": true,
@@ -153,6 +165,7 @@
       "resources/js/bootstrap.js",
       "_react-dom-BRm_IiUy.js",
       "resources/js/main.tsx",
+      "_error.tsx-COjbnRJW.js",
       "_axios-t--hEgTQ.js",
       "_scheduler-BNqrtbQi.js",
       "_theme-toggle.tsx-Bzj9N4G4.js",
@@ -162,7 +175,7 @@
       "_lucide-react-D5e_nBrO.js",
       "_header.tsx-CStdh5Ap.js",
       "_input-form.tsx-0nhgnljW.js",
-      "_results-section.tsx-joyOMZkf.js",
+      "_results-section.tsx-B0ocaf16.js",
       "_html2canvas-BfYXEYrK.js",
       "_marked-DK8KC6kv.js",
       "_loading-overlay.tsx-DStE172z.js",
@@ -183,7 +196,7 @@
     ]
   },
   "resources/js/main.tsx": {
-    "file": "assets/main-DZ8hrUth.js",
+    "file": "assets/main-D-j5x4jK.js",
     "name": "main",
     "src": "resources/js/main.tsx",
     "isEntry": true,
@@ -192,7 +205,7 @@
       "_theme-toggle.tsx-Bzj9N4G4.js",
       "_header.tsx-CStdh5Ap.js",
       "_input-form.tsx-0nhgnljW.js",
-      "_results-section.tsx-joyOMZkf.js",
+      "_results-section.tsx-B0ocaf16.js",
       "_loading-overlay.tsx-DStE172z.js",
       "_use-theme.tsx-D1AMQvHO.js",
       "_background-pattern.tsx-DDgm4IlE.js",

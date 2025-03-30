@@ -50,7 +50,10 @@ export default function Home({ lang }: { lang: string }) {
 
       const data = await response.json();
       if (!response.ok || !data.success) {
-        setError(data.message || (lang == 'en' ? 'Something went wrong' : 'Terjadi kesalahan'));
+        setError(data.message || (
+          lang == 'en' ? 
+          'Something went wrong, please refresh the page and try again' :
+          'Terjadi kesalahan, silahkan refresh halaman dan coba lagi'));
         input?.focus();
         return;
       }
@@ -62,7 +65,10 @@ export default function Home({ lang }: { lang: string }) {
       setShowResults(true);
       setError(null);
     } catch (error) {
-      setError(lang == 'en' ? "Something went wrong" : "Terjadi kesalahan");
+      setError(
+        lang == 'en' ?
+        "Something went wrong, please refresh the page and try again" :
+        "Terjadi kesalahan, silahkan refresh halaman dan coba lagi");
       console.error(error);
       input?.focus();
     } finally {
@@ -87,8 +93,6 @@ export default function Home({ lang }: { lang: string }) {
       setCopied(false);
     }, 2000);
   };
-
-  
 
   return (
     <main

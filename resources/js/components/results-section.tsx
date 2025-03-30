@@ -167,12 +167,14 @@ function ProfileCard({ username, profileData, darkMode }: ProfileCardProps) {
               whileHover={{ rotate: 5 }}
             >
               <img
-                src={profileData.profilePicUrl}
+                src={
+                  new URL(profileData.profilePicUrl).searchParams.get("url") ?? profileData.profilePicUrl
+                }
                 alt={`${username}'s profile`}
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
                 onError={(e) => {
-                  e.currentTarget.src = "https://via.placeholder.com/128";
+                  e.currentTarget.src = "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png";
                 }}
               />
               <motion.div
@@ -377,7 +379,7 @@ function RoastCard({
       // Profile image
       const profileImg = document.createElement("img");
       profileImg.src =
-        profileData?.profilePicUrl || "/placeholder.svg?height=64&width=64"
+        profileData?.profilePicUrl || "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png"
         ;
       profileImg.alt = username;
       profileImg.style.width = "64px";

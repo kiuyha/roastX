@@ -3,6 +3,7 @@ export interface XProfile {
   fullName: string;
   biography: string;
   isVerified: boolean;
+  isPrivate: boolean;
   tweetsCount: number;
   followersCount: number;
   followsCount: number;

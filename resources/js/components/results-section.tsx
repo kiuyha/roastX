@@ -11,7 +11,8 @@ import {
   Copy,
   CheckCheck,
   Download,
-  VerifiedIcon
+  VerifiedIcon,
+  LockIcon
 } from "lucide-react";
 import type { XProfile } from "../types/index";
 import html2canvas from "html2canvas";
@@ -202,6 +203,8 @@ function ProfileCard({ username, profileData, darkMode }: ProfileCardProps) {
             >
               <motion.p>@{username}</motion.p>
               {profileData?.isVerified && <VerifiedIcon  className="fill-blue-500"/>}
+              {profileData?.isPrivate && <LockIcon/>}
+
             </motion.div>
             {profileData?.fullName && (
               <motion.p
@@ -392,12 +395,13 @@ function RoastCard({
       const usernameContainer = document.createElement("div");
       usernameContainer.style.marginLeft = "15px";
 
-      // container for username and verified icon
+      // container for username and their icon
       const usernameTextContainer = document.createElement("div");
       usernameTextContainer.style.display = "flex";
       usernameTextContainer.style.alignItems = "center";
       usernameTextContainer.style.justifyContent = "center";
       usernameTextContainer.style.gap = "4px";
+      usernameTextContainer.style.color = darkMode ? "#cccccc" : "#333333"
       
       // Username text
       const usernameText = document.createElement("div");
@@ -407,11 +411,18 @@ function RoastCard({
       usernameText.style.color = darkMode ? "#ffffff" : "#000000";
       usernameTextContainer.appendChild(usernameText);
 
-      // verified icon
-      const verifiedIcon = document.createElement("span");
-      usernameTextContainer.appendChild(verifiedIcon);
-      const rootVerifiedIcon = createRoot(verifiedIcon);
-      rootVerifiedIcon.render(<VerifiedIcon className="fill-blue-500" />);
+      // their icon
+      const usernameIcon = document.createElement("span");
+      usernameIcon.style.display = "flex";
+      usernameIcon.style.alignItems = "center";
+      usernameIcon.style.gap = "2px";
+      usernameTextContainer.appendChild(usernameIcon);
+      const rootUsernameIcon = createRoot(usernameIcon);
+      rootUsernameIcon.render([
+        profileData?.isVerified && <VerifiedIcon className="fill-blue-500" />,
+        profileData?.isPrivate && <LockIcon />
+      ]);
+    
 
       // Full name text (if available)
       if (profileData?.fullName) {

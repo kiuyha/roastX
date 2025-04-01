@@ -175,7 +175,8 @@ class MainController extends Controller
             $fullname = $xpath->query('//a[@class="profile-card-fullname"]/text()')->item(0)->nodeValue ?? null;
             $bioNodes = $xpath->query('//div[@class="profile-bio"]/p')->item(0) ?? null;
             $biography = $bioNodes ? $bioNodes->ownerDocument->saveXML($bioNodes) : null;
-            $isVerified = $xpath->query('//a[@class="profile-card-fullname"]/div/span')->item(0) ? true : false;
+            $isVerified = $xpath->query('//a[@class="profile-card-fullname"]/div/span[contains(@class, "verified-icon")]')->item(0) ? true : false;
+            $isPrivate = $xpath->query('//a[@class="profile-card-fullname"]/div/span[contains(@class, "icon-lock")]')->item(0) ? true : false;
             $tweetsCount = $xpath->query('//li[@class="posts"]/span[@class="profile-stat-num"]')->item(0)->nodeValue ?? null;
             $following = $xpath->query('//li[@class="following"]/span[@class="profile-stat-num"]')->item(0)->nodeValue ?? null;
             $followers = $xpath->query('//li[@class="followers"]/span[@class="profile-stat-num"]')->item(0)->nodeValue ?? null;
@@ -202,6 +203,7 @@ class MainController extends Controller
                 'fullName' => $fullname,
                 'biography' => $biography,
                 'isVerified' => $isVerified,
+                'isPrivate' => $isPrivate,
                 'tweetsCount' => $this->formatNumber( (int) str_replace(',', '', $tweetsCount) ),
                 'followsCount' => $this->formatNumber( (int) str_replace(',', '', $following) ),
                 'followersCount' => $this->formatNumber( (int) str_replace(',', '', $followers) ),
@@ -247,15 +249,19 @@ class MainController extends Controller
                                     Occasionally use emoticon.
                                     Use **sarcastic and humiliating** until it gets mental,
                                     Use slang language, you can use vulgar words but don't go overboard,
-                                    use words that can be understood based on the following data: {$profileDataString}" :
+                                    Don't talk about the profile picture being blur, except if you understand it
+                                    use words that can be understood.
+                                    You can roast the number of followers, tweets, bio, profile picture, or anything based on the following data (the data comes from Nitter, don't talk about it): {$profileDataString}" :
     
                                     "Berikan roasting sarkastik, kejam, dan menyindir secara lucu (tapi tidak terlalu kasar) untuk profil Twitter/X \"{$username}\" ini. 
                                     PENTING: Berikan HANYA teks roasting, tanpa kata pengantar atau pembuka apapun seperti \"Oke, siap\" atau \"Berikut roasting untuk\". Langsung mulai dengan roastingnya.
                                     sesekali gunakan emoticon.
                                     Gunakan **gaya sarkastik dan menyakitkan** sampai kena mental,
                                     Gunakan Bahasa Gaul, boleh menggunakan kata kata kasar tapi jangan berlebihan,
+                                    Jangan berbicara tentang gambar profil yang blur, kecuali kamu paham dengan gambarnya
                                     gunakan kata kata yang bisa dipahami.
-                                    Boleh menyindir jumlah followers, tweet, bio, gaya foto, atau apapun yang relevan berdasarkan data berikut: {$profileDataString}",
+                                    Boleh menyindir jumlah followers, tweet, bio, gaya foto, atau apapun yang relevan berdasarkan data berikut (data ini berasal dari Nitter, jangan berbicara tentang itu):
+                                    {$profileDataString}",
                                 ],
                             ],
                         ],

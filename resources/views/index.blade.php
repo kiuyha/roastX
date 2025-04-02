@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>RoastX - Roast akun X anda dengan AI</title>
-    <meta name="description" content="RoastX menggunakan AI untuk mengejek profil X Anda dengan komentar lucu dan pedas. Bersiaplah untuk di-roasting!">
+    <meta name="description" content= {{ $lang == 'en'?
+    "RoastX uses AI to roast your X (Twitter) profile with funny and spicy roasts. Get ready to be roasted!" :
+    "RoastX menggunakan AI untuk mengejek profil X Anda dengan komentar lucu dan pedas. Bersiaplah untuk di-roasting!"
+    }}>
     <meta name="keywords" content="twitter roast,ai roast,social media roast,twitter profile,funny roast, x roast, x profile">
     <meta name="author" content="kiuyha">
     <link rel="icon" href="/favicon.ico">

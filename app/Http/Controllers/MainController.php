@@ -90,6 +90,9 @@ class MainController extends Controller
 
     protected function getUserIpAdress() : string
     {
+        if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+            return $_SERVER['HTTP_CF_CONNECTING_IP'];
+        }
         if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             return explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0];
         } else {

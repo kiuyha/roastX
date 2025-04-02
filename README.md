@@ -13,7 +13,7 @@ RoastX is inspired by the [Roastgram](https://github.com/syahrulnizam7/roastgram
 - **🎭 Sarcastic Responses** – Using Gemini AI to create witty and sharp responses.
 - **✨ Interactive Animations** – Using Framer Motion for an engaging and dynamic visual experience.
 - **🎨 Modern Design** – Responsive and aesthetic UI with Tailwind CSS for an appealing layout.
-- **🔗 Data Scraping** – Using cURL and HTMLXPATH to scraping data from X clone web, [Nitter](https://nitter.com)
+- **🔗 Data Scraping** – Using cURL and HTMLXPATH to scraping data from X clone web, [Nitter](https://nitter.net)
 - **⚡ Optimal Performance** – Leveraging PHP for fast development and a small app size.
 
 ---

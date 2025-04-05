@@ -44,12 +44,12 @@ function wrapHtml(id: string, inner: string, head: string, attrs: Record<string,
     <html lang="${attrs['data-lang'] ?? 'en'}">
         <head>
             ${head}
+            @vite(['resources/js/app.tsx', 'resources/css/app.css'])
         </head>
         <body>
             <div id="${id}" ${attrString}>
                 ${inner}
             </div>
-            @vite(['resources/js/app.tsx', 'resources/css/app.css'])
         </body>
     </html>`;
 }

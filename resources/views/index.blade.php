@@ -4,6 +4,8 @@
             <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="alternate" hreflang="en" href="{{ url('/')}}/en" />
+        <link rel="alternate" hreflang="id" href="{{ url('/')}}/id" />
         <title>RoastX - Roast akun X anda dengan AI</title>
         <meta name="description" content= {{ $lang == 'en'?
         "RoastX uses AI to roast your X (Twitter) profile with funny and spicy roasts. Get ready to be roasted!" :
@@ -13,8 +15,8 @@
         <meta name="author" content="kiuyha">
         <link rel="icon" href="/favicon.ico">
         <link preload href="/roastxlogo.webp" type="image/webp">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="manifest" href="manifest.json">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
             @vite(['resources/js/app.tsx', 'resources/css/app.css'])
         </head>

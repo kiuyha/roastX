@@ -13,9 +13,10 @@
     <meta name="author" content="kiuyha">
     <link rel="icon" href="/favicon.ico">
     <link preload href="/roastxlogo.webp" type="image/webp">
-    @vite(['resources/js/app.tsx', 'resources/css/app.css'])
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="manifest" href="manifest.json">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    @vite(['resources/js/app.tsx', 'resources/css/app.css'])
 </head>
 <body>    
     <div id="app" data-lang="{{ $lang }}"></div>

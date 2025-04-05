@@ -11,7 +11,6 @@ use DOMXPath;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Number;
@@ -38,10 +37,11 @@ class MainController extends Controller
     public function fetchData(Request $request, String $lang): JsonResponse
     {
         if (!in_array($lang, $this->supportedLanguages)) abort(404);
-
+        
         $data = $request->all();
         $username = $data['username'];
         
+        // check username validation
         if (!$username || !is_string($username)){
             return response()->json([
                 'success' => false,
@@ -51,8 +51,17 @@ class MainController extends Controller
             ], 400);
         } 
 
-        // save user log
+        $token = $data['turnstileToken'];
         $ip = $this->getUserIpAdress();
+
+        if (!$this->checkTurnstile($token, $ip)) {
+            return response()->json([
+                'success' => false,
+                'message' => $lang == 'en' ? 
+                    'You have been detected as a robot.' :
+                    'Kamu telah terdeteksi sebagai robot.'
+            ], 400);
+        }
 
         // check previous response
         $previousResponse = PreviousResponse::where('username', $username)->first();
@@ -86,6 +95,25 @@ class MainController extends Controller
             return response()->json($response, ($response['success'] ? 200 : 400));
         };
 
+    }
+
+    protected function checkTurnstile(string $token, string $ip) : bool
+    {
+        [$body, $err, $http_code] = $this->curlRequest(
+            isPost: true,
+            url: 'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+            payload: [
+                'secret' => env('CF_TURNSTILE_SECRET'),
+                'response' => $token,
+                'remoteip' => $ip,
+            ]
+        );
+        if ($err || $http_code != 200) {
+            Log::error("Turnstile error: $err | $http_code");
+            return false;
+        }
+
+        return json_decode($body)->success;
     }
 
     protected function getUserIpAdress() : string

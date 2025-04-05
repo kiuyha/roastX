@@ -3,85 +3,86 @@
     "file": "assets/js/vendor/axios-t--hEgTQ.js",
     "name": "js/vendor/axios"
   },
-  "_background-pattern.tsx-DDgm4IlE.js": {
-    "file": "assets/js/components/background-pattern.tsx-DDgm4IlE.js",
+  "_background-pattern.tsx-ikEXrrIs.js": {
+    "file": "assets/js/components/background-pattern.tsx-ikEXrrIs.js",
     "name": "js/components/background-pattern.tsx",
     "imports": [
-      "_react-CJ2V4BqM.js"
+      "_react-DITM8GMD.js"
     ]
   },
-  "_decoration-elements.tsx-BFXgMZip.js": {
-    "file": "assets/js/components/decoration-elements.tsx-BFXgMZip.js",
+  "_decoration-elements.tsx-BoccBXf5.js": {
+    "file": "assets/js/components/decoration-elements.tsx-BoccBXf5.js",
     "name": "js/components/decoration-elements.tsx",
     "imports": [
-      "_react-CJ2V4BqM.js",
-      "_framer-motion-CLzqDuJ2.js"
+      "_react-DITM8GMD.js",
+      "_framer-motion-Did_cceX.js"
     ]
   },
-  "_error.tsx-C74M1eEQ.js": {
-    "file": "assets/js/js/error.tsx-C74M1eEQ.js",
+  "_error.tsx-0lGsyvfI.js": {
+    "file": "assets/js/js/error.tsx-0lGsyvfI.js",
     "name": "js/js/error.tsx",
     "imports": [
-      "_react-CJ2V4BqM.js",
-      "_background-pattern.tsx-DDgm4IlE.js",
-      "_theme-toggle.tsx-DImKGAzS.js",
-      "_use-theme.tsx-D1AMQvHO.js",
-      "_footer.tsx-CpSMMdsD.js",
-      "_framer-motion-CLzqDuJ2.js"
+      "_react-DITM8GMD.js",
+      "_background-pattern.tsx-ikEXrrIs.js",
+      "_theme-toggle.tsx-An-jWFwx.js",
+      "_use-theme.tsx-CjfsWyRr.js",
+      "_footer.tsx-CAVXx0sc.js",
+      "_framer-motion-Did_cceX.js"
     ]
   },
-  "_footer.tsx-CpSMMdsD.js": {
-    "file": "assets/js/components/footer.tsx-CpSMMdsD.js",
+  "_footer.tsx-CAVXx0sc.js": {
+    "file": "assets/js/components/footer.tsx-CAVXx0sc.js",
     "name": "js/components/footer.tsx",
     "imports": [
-      "_react-CJ2V4BqM.js",
-      "_react-icons-sX9L970i.js"
+      "_react-DITM8GMD.js",
+      "_react-icons-PX409zGV.js"
     ]
   },
-  "_framer-motion-CLzqDuJ2.js": {
-    "file": "assets/js/vendor/framer-motion-CLzqDuJ2.js",
+  "_framer-motion-Did_cceX.js": {
+    "file": "assets/js/vendor/framer-motion-Did_cceX.js",
     "name": "js/vendor/framer-motion",
     "imports": [
-      "_react-CJ2V4BqM.js",
+      "_react-DITM8GMD.js",
       "_motion-utils-BDWe_Wef.js",
       "_motion-dom-Di8Hrc7E.js"
     ]
   },
-  "_header.tsx-znLrhR7-.js": {
-    "file": "assets/js/components/header.tsx-znLrhR7-.js",
+  "_header.tsx-DjiEdAQU.js": {
+    "file": "assets/js/components/header.tsx-DjiEdAQU.js",
     "name": "js/components/header.tsx",
     "imports": [
-      "_react-CJ2V4BqM.js",
-      "_framer-motion-CLzqDuJ2.js",
-      "_lucide-react-VHczbaVM.js"
+      "_react-DITM8GMD.js",
+      "_framer-motion-Did_cceX.js",
+      "_lucide-react-DzLLSNyd.js"
     ]
   },
   "_html2canvas-BfYXEYrK.js": {
     "file": "assets/js/vendor/html2canvas-BfYXEYrK.js",
     "name": "js/vendor/html2canvas"
   },
-  "_input-form.tsx-DeTjcFwV.js": {
-    "file": "assets/js/components/input-form.tsx-DeTjcFwV.js",
+  "_input-form.tsx-FPnOHr9J.js": {
+    "file": "assets/js/components/input-form.tsx-FPnOHr9J.js",
     "name": "js/components/input-form.tsx",
     "imports": [
-      "_react-CJ2V4BqM.js",
-      "_framer-motion-CLzqDuJ2.js",
-      "_lucide-react-VHczbaVM.js"
+      "_react-DITM8GMD.js",
+      "_react-cloudflare-turnstile-BLy7yhGE.js",
+      "_framer-motion-Did_cceX.js",
+      "_lucide-react-DzLLSNyd.js"
     ]
   },
-  "_loading-overlay.tsx-DStE172z.js": {
-    "file": "assets/js/components/loading-overlay.tsx-DStE172z.js",
+  "_loading-overlay.tsx-CgfnBprL.js": {
+    "file": "assets/js/components/loading-overlay.tsx-CgfnBprL.js",
     "name": "js/components/loading-overlay.tsx",
     "imports": [
-      "_react-CJ2V4BqM.js",
-      "_framer-motion-CLzqDuJ2.js"
+      "_react-DITM8GMD.js",
+      "_framer-motion-Did_cceX.js"
     ]
   },
-  "_lucide-react-VHczbaVM.js": {
-    "file": "assets/js/vendor/lucide-react-VHczbaVM.js",
+  "_lucide-react-DzLLSNyd.js": {
+    "file": "assets/js/vendor/lucide-react-DzLLSNyd.js",
     "name": "js/vendor/lucide-react",
     "imports": [
-      "_react-CJ2V4BqM.js"
+      "_react-DITM8GMD.js"
     ]
   },
   "_marked-DK8KC6kv.js": {
@@ -99,55 +100,62 @@
     "file": "assets/js/vendor/motion-utils-BDWe_Wef.js",
     "name": "js/vendor/motion-utils"
   },
-  "_react-CJ2V4BqM.js": {
-    "file": "assets/js/vendor/react-CJ2V4BqM.js",
+  "_react-DITM8GMD.js": {
+    "file": "assets/js/vendor/react-DITM8GMD.js",
     "name": "js/vendor/react"
   },
-  "_react-dom-BRm_IiUy.js": {
-    "file": "assets/js/vendor/react-dom-BRm_IiUy.js",
+  "_react-cloudflare-turnstile-BLy7yhGE.js": {
+    "file": "assets/js/vendor/react-cloudflare-turnstile-BLy7yhGE.js",
+    "name": "js/vendor/react-cloudflare-turnstile",
+    "imports": [
+      "_react-DITM8GMD.js"
+    ]
+  },
+  "_react-dom-DLscoSuv.js": {
+    "file": "assets/js/vendor/react-dom-DLscoSuv.js",
     "name": "js/vendor/react-dom",
     "imports": [
-      "_react-CJ2V4BqM.js",
+      "_react-DITM8GMD.js",
       "_scheduler-BNqrtbQi.js"
     ]
   },
-  "_react-icons-sX9L970i.js": {
-    "file": "assets/js/vendor/react-icons-sX9L970i.js",
+  "_react-icons-PX409zGV.js": {
+    "file": "assets/js/vendor/react-icons-PX409zGV.js",
     "name": "js/vendor/react-icons",
     "imports": [
-      "_react-CJ2V4BqM.js"
+      "_react-DITM8GMD.js"
     ]
   },
-  "_results-section.tsx-WjclQDeX.js": {
-    "file": "assets/js/components/results-section.tsx-WjclQDeX.js",
+  "_results-section.tsx-BhETadg2.js": {
+    "file": "assets/js/components/results-section.tsx-BhETadg2.js",
     "name": "js/components/results-section.tsx",
     "imports": [
-      "_react-CJ2V4BqM.js",
+      "_react-DITM8GMD.js",
       "_html2canvas-BfYXEYrK.js",
       "_marked-DK8KC6kv.js",
-      "_react-dom-BRm_IiUy.js",
-      "_framer-motion-CLzqDuJ2.js",
-      "_lucide-react-VHczbaVM.js"
+      "_react-dom-DLscoSuv.js",
+      "_framer-motion-Did_cceX.js",
+      "_lucide-react-DzLLSNyd.js"
     ]
   },
   "_scheduler-BNqrtbQi.js": {
     "file": "assets/js/vendor/scheduler-BNqrtbQi.js",
     "name": "js/vendor/scheduler"
   },
-  "_theme-toggle.tsx-DImKGAzS.js": {
-    "file": "assets/js/components/theme-toggle.tsx-DImKGAzS.js",
+  "_theme-toggle.tsx-An-jWFwx.js": {
+    "file": "assets/js/components/theme-toggle.tsx-An-jWFwx.js",
     "name": "js/components/theme-toggle.tsx",
     "imports": [
-      "_react-CJ2V4BqM.js",
-      "_framer-motion-CLzqDuJ2.js",
-      "_lucide-react-VHczbaVM.js"
+      "_react-DITM8GMD.js",
+      "_framer-motion-Did_cceX.js",
+      "_lucide-react-DzLLSNyd.js"
     ]
   },
-  "_use-theme.tsx-D1AMQvHO.js": {
-    "file": "assets/js/hooks/use-theme.tsx-D1AMQvHO.js",
+  "_use-theme.tsx-CjfsWyRr.js": {
+    "file": "assets/js/hooks/use-theme.tsx-CjfsWyRr.js",
     "name": "js/hooks/use-theme.tsx",
     "imports": [
-      "_react-CJ2V4BqM.js"
+      "_react-DITM8GMD.js"
     ]
   },
   "resources/css/app.css": {
@@ -156,34 +164,35 @@
     "isEntry": true
   },
   "resources/js/app.tsx": {
-    "file": "assets/app-DmJKlf3q.js",
+    "file": "assets/app-UjQjaz8x.js",
     "name": "app",
     "src": "resources/js/app.tsx",
     "isEntry": true,
     "imports": [
-      "_react-CJ2V4BqM.js",
+      "_react-DITM8GMD.js",
       "resources/js/bootstrap.js",
-      "_react-dom-BRm_IiUy.js",
+      "_react-dom-DLscoSuv.js",
       "resources/js/main.tsx",
-      "_error.tsx-C74M1eEQ.js",
+      "_error.tsx-0lGsyvfI.js",
       "_axios-t--hEgTQ.js",
       "_scheduler-BNqrtbQi.js",
-      "_theme-toggle.tsx-DImKGAzS.js",
-      "_framer-motion-CLzqDuJ2.js",
+      "_theme-toggle.tsx-An-jWFwx.js",
+      "_framer-motion-Did_cceX.js",
       "_motion-utils-BDWe_Wef.js",
       "_motion-dom-Di8Hrc7E.js",
-      "_lucide-react-VHczbaVM.js",
-      "_header.tsx-znLrhR7-.js",
-      "_input-form.tsx-DeTjcFwV.js",
-      "_results-section.tsx-WjclQDeX.js",
+      "_lucide-react-DzLLSNyd.js",
+      "_header.tsx-DjiEdAQU.js",
+      "_input-form.tsx-FPnOHr9J.js",
+      "_react-cloudflare-turnstile-BLy7yhGE.js",
+      "_results-section.tsx-BhETadg2.js",
       "_html2canvas-BfYXEYrK.js",
       "_marked-DK8KC6kv.js",
-      "_loading-overlay.tsx-DStE172z.js",
-      "_use-theme.tsx-D1AMQvHO.js",
-      "_background-pattern.tsx-DDgm4IlE.js",
-      "_decoration-elements.tsx-BFXgMZip.js",
-      "_footer.tsx-CpSMMdsD.js",
-      "_react-icons-sX9L970i.js"
+      "_loading-overlay.tsx-CgfnBprL.js",
+      "_use-theme.tsx-CjfsWyRr.js",
+      "_background-pattern.tsx-ikEXrrIs.js",
+      "_decoration-elements.tsx-BoccBXf5.js",
+      "_footer.tsx-CAVXx0sc.js",
+      "_react-icons-PX409zGV.js"
     ]
   },
   "resources/js/bootstrap.js": {
@@ -196,28 +205,29 @@
     ]
   },
   "resources/js/main.tsx": {
-    "file": "assets/main-CKblxJIu.js",
+    "file": "assets/main-bJEUuhWf.js",
     "name": "main",
     "src": "resources/js/main.tsx",
     "isEntry": true,
     "imports": [
-      "_react-CJ2V4BqM.js",
-      "_theme-toggle.tsx-DImKGAzS.js",
-      "_header.tsx-znLrhR7-.js",
-      "_input-form.tsx-DeTjcFwV.js",
-      "_results-section.tsx-WjclQDeX.js",
-      "_loading-overlay.tsx-DStE172z.js",
-      "_use-theme.tsx-D1AMQvHO.js",
-      "_background-pattern.tsx-DDgm4IlE.js",
-      "_decoration-elements.tsx-BFXgMZip.js",
-      "_footer.tsx-CpSMMdsD.js",
-      "_framer-motion-CLzqDuJ2.js",
-      "_lucide-react-VHczbaVM.js",
+      "_react-DITM8GMD.js",
+      "_theme-toggle.tsx-An-jWFwx.js",
+      "_header.tsx-DjiEdAQU.js",
+      "_input-form.tsx-FPnOHr9J.js",
+      "_results-section.tsx-BhETadg2.js",
+      "_loading-overlay.tsx-CgfnBprL.js",
+      "_use-theme.tsx-CjfsWyRr.js",
+      "_background-pattern.tsx-ikEXrrIs.js",
+      "_decoration-elements.tsx-BoccBXf5.js",
+      "_footer.tsx-CAVXx0sc.js",
+      "_framer-motion-Did_cceX.js",
+      "_lucide-react-DzLLSNyd.js",
+      "_react-cloudflare-turnstile-BLy7yhGE.js",
       "_html2canvas-BfYXEYrK.js",
       "_marked-DK8KC6kv.js",
-      "_react-dom-BRm_IiUy.js",
+      "_react-dom-DLscoSuv.js",
       "_scheduler-BNqrtbQi.js",
-      "_react-icons-sX9L970i.js",
+      "_react-icons-PX409zGV.js",
       "_motion-utils-BDWe_Wef.js",
       "_motion-dom-Di8Hrc7E.js"
     ]

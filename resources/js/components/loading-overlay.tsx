@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 interface LoadingOverlayProps {
-  stage: "idle" | "roasting" | "complete";
+  stage: "idle" | "turnstile" | "roasting" | "complete";
   darkMode: boolean;
   lang: string;
 }
@@ -102,7 +102,8 @@ export function LoadingOverlay({ stage, darkMode, lang }: LoadingOverlayProps) {
       {/* Progress Bar */}
       <div className="text-center px-4">
         <p className="text-white text-lg md:text-xl font-bold">
-          { lang == "en" ? "Processing spicy roast..." : "Memproses roast yang pedas... 🔥"}
+          { stage == "turnstile" && (lang == "en" ? "Verifying whether human or robot..." : "Memverifikasi apakah manusia atau robot... ")}
+          { stage == "roasting" && (lang == "en" ? "Processing spicy roast... 🔥" : "Memproses roast yang pedas... 🔥")}
         </p>
 
         {/* Progress Bar Container */}

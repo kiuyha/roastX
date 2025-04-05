@@ -13,12 +13,13 @@ import { XProfile } from "./types/index";
 
 export default function Home({ lang }: { lang: string }) {
   const [username, setUsername] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [roast, setRoast] = useState<string | null>(null);
   const [profileData, setProfileData] = useState<XProfile | null>(null);
   const [stage, setStage] = useState<
-    "idle" | "roasting" | "complete"
+    "idle" | "turnstile" | "roasting" | "complete"
   >("idle");
   const [showResults, setShowResults] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -31,12 +32,20 @@ export default function Home({ lang }: { lang: string }) {
     if (input instanceof HTMLInputElement) {
       input.blur();
     }
+    setLoading(true);
+    if (turnstileToken) {
+      await fetchData();
+    }else{
+      setStage("turnstile");
+    }
+    return;
+  };
 
+  const fetchData = async () => {
+    const input = document.getElementById("username") as HTMLInputElement;
     try {
-      setLoading(true);
       setStage("roasting");
 
-      // Get Roasting
       const response = await fetch(`/${lang}/fetch-data`, {
         method: "POST",
         headers: {
@@ -45,7 +54,7 @@ export default function Home({ lang }: { lang: string }) {
             .querySelector('meta[name="csrf-token"]')
             ?.getAttribute("content") as string,
         },
-        body: JSON.stringify({ username }),
+        body: JSON.stringify({ username, turnstileToken }),
       });
 
       const data = await response.json();
@@ -74,13 +83,14 @@ export default function Home({ lang }: { lang: string }) {
     } finally {
       setLoading(false);
     } 
-  };
+  }
 
   const resetForm = () => {
     setShowResults(false);
     setRoast(null);
     setProfileData(null);
     setUsername("");
+    setTurnstileToken("");
   };
 
   const copyToClipboard = () => {
@@ -118,7 +128,11 @@ export default function Home({ lang }: { lang: string }) {
             <InputForm
               username={username}
               setUsername={setUsername}
+              turnstileToken={turnstileToken}
+              setTurnstileToken={setTurnstileToken}
+              stage={stage}
               handleSubmit={handleSubmit}
+              fetchData={fetchData}
               loading={loading}
               error={error}
               darkMode={darkMode}

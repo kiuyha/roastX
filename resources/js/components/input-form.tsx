@@ -8,12 +8,17 @@ import {
   Sparkles,
   User,
 } from "lucide-react";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import Turnstile from "react-cloudflare-turnstile";
 
 interface InputFormProps {
   username: string;
   setUsername: (value: string) => void;
-  handleSubmit: (e: React.FormEvent) => Promise<void>;
+  turnstileToken: string;
+  setTurnstileToken: (value: string) => void;
+  stage: string;
+  handleSubmit: (e: React.FormEvent) => void;
+  fetchData: () => void;
   loading: boolean;
   error: string | null;
   darkMode: boolean;
@@ -24,13 +29,29 @@ interface InputFormProps {
 export function InputForm({
   username,
   setUsername,
+  turnstileToken,
+  setTurnstileToken,
+  stage,
   handleSubmit,
+  fetchData,
   loading,
   error,
   darkMode,
   flameControls,
   lang,
 }: InputFormProps) {
+  const [turnstileKey, setTurnstileKey] = useState(Date.now());
+  // restart turnstile everytime being render
+  useEffect(() => {
+    setTurnstileKey(Date.now());
+  }, []);
+
+  useEffect(() => {
+    if (stage === "turnstile" && turnstileToken) {
+      fetchData();
+    }
+  }, [stage, turnstileToken]);
+
   return (
     <motion.div
       key="input-form"
@@ -118,7 +139,17 @@ export function InputForm({
                   required
                 />
               </div>
+              <div className="hidden">
+                <Turnstile
+                  turnstileSiteKey="0x4AAAAAABD5-ZFIXhpQpDFR"
+                  key={turnstileKey}
+                  callback={ (token) => {
+                    setTurnstileToken(token);
+                  }}
+                />
+              </div>
             </div>
+            
 
             <motion.button
               type="submit"

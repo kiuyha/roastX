@@ -8,7 +8,7 @@
             $errorCode = $exception->getStatusCode() ?? 500;
             $lang = Str::startsWith(request()->path(), 'en') ? 'en' : 'id';
         @endphp
-        <title>Error {{ $statusCode }}</title>
+        <title>Error {{ $errorCode }}</title>
             @vite(['resources/js/app.tsx', 'resources/css/app.css'])
         </head>
         <body>

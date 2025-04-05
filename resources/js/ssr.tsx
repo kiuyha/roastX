@@ -34,7 +34,7 @@ export function renderError( lang= 'en', errorCode= '500' ) {
             $errorCode = $exception->getStatusCode() ?? 500;
             $lang = Str::startsWith(request()->path(), 'en') ? 'en' : 'id';
         @endphp
-        <title>Error {{ $statusCode }}</title>`
+        <title>Error {{ $errorCode }}</title>`
     return wrapHtml('error',html, head, { 'data-lang': "$lang", 'data-error-code': "$errorCode" });
 
 }

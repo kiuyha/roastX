@@ -9,8 +9,6 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.tsx',
-                'resources/js/bootstrap.js',
-                'resources/js/main.tsx',
             ],
             refresh: true,
         }),

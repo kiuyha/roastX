@@ -6,9 +6,10 @@ interface HeaderProps {
   showResults: boolean;
   resetForm: () => void;
   darkMode: boolean;
+  lang: string;
 }
 
-export function Header({ showResults, resetForm, darkMode }: HeaderProps) {
+export function Header({ showResults, resetForm, darkMode, lang }: HeaderProps) {
   return (
     <motion.header
       className={`fixed top-0 left-0 w-full z-10 py-3 md:py-4 px-4 md:px-6 ${
@@ -57,19 +58,18 @@ export function Header({ showResults, resetForm, darkMode }: HeaderProps) {
               Reset
             </motion.button>
           )}
-          <LanguageSwitcher />
+          <LanguageSwitcher selectedLang={lang}/>
         </div>
       </div>
     </motion.header>
   );
 }
-function LanguageSwitcher() {
+function LanguageSwitcher({selectedLang}: {selectedLang: string}) {
   const [isOpen, setIsOpen] = useState(false);
   const languages: Record<string, string> = {
     "en" : "🇬🇧" ,
     "id": "🇮🇩" 
   };
-  const selectedLang: string = window.location.pathname.split("/")[1];
   const selectedFlag: string = languages[selectedLang];
 
   return (

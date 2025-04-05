@@ -1,8 +1,8 @@
-import { BackgroundPattern } from "./components/background-pattern";
-import { ThemeToggle } from "./components/theme-toggle";
-import { useTheme } from "./hooks/use-theme";
-import Footer from "./components/footer";
-import {motion} from 'framer-motion';
+import { BackgroundPattern } from "../components/background-pattern";
+import { ThemeToggle } from "../components/theme-toggle";
+import { useTheme } from "../hooks/use-theme";
+import Footer from "../components/footer";
+import { motion } from 'framer-motion';
 
 export default function Error({lang, errorCode}: {lang: string, errorCode: string}) {
     const {darkMode, setDarkMode} = useTheme();

@@ -1,8 +1,4 @@
 {
-  "_axios-t--hEgTQ.js": {
-    "file": "assets/js/vendor/axios-t--hEgTQ.js",
-    "name": "js/vendor/axios"
-  },
   "_background-pattern.tsx-ikEXrrIs.js": {
     "file": "assets/js/components/background-pattern.tsx-ikEXrrIs.js",
     "name": "js/components/background-pattern.tsx",
@@ -19,8 +15,8 @@
     ]
   },
   "_error.tsx-0lGsyvfI.js": {
-    "file": "assets/js/js/error.tsx-0lGsyvfI.js",
-    "name": "js/js/error.tsx",
+    "file": "assets/js/pages/error.tsx-0lGsyvfI.js",
+    "name": "js/pages/error.tsx",
     "imports": [
       "_react-DITM8GMD.js",
       "_background-pattern.tsx-ikEXrrIs.js",
@@ -47,8 +43,8 @@
       "_motion-dom-Di8Hrc7E.js"
     ]
   },
-  "_header.tsx-DjiEdAQU.js": {
-    "file": "assets/js/components/header.tsx-DjiEdAQU.js",
+  "_header.tsx-HF58KVop.js": {
+    "file": "assets/js/components/header.tsx-HF58KVop.js",
     "name": "js/components/header.tsx",
     "imports": [
       "_react-DITM8GMD.js",
@@ -60,8 +56,8 @@
     "file": "assets/js/vendor/html2canvas-BfYXEYrK.js",
     "name": "js/vendor/html2canvas"
   },
-  "_input-form.tsx-FPnOHr9J.js": {
-    "file": "assets/js/components/input-form.tsx-FPnOHr9J.js",
+  "_input-form.tsx-DiJA7W4F.js": {
+    "file": "assets/js/components/input-form.tsx-DiJA7W4F.js",
     "name": "js/components/input-form.tsx",
     "imports": [
       "_react-DITM8GMD.js",
@@ -83,6 +79,23 @@
     "name": "js/vendor/lucide-react",
     "imports": [
       "_react-DITM8GMD.js"
+    ]
+  },
+  "_main.tsx-C2gO4lzO.js": {
+    "file": "assets/js/pages/main.tsx-C2gO4lzO.js",
+    "name": "js/pages/main.tsx",
+    "imports": [
+      "_react-DITM8GMD.js",
+      "_theme-toggle.tsx-An-jWFwx.js",
+      "_header.tsx-HF58KVop.js",
+      "_input-form.tsx-DiJA7W4F.js",
+      "_results-section.tsx-BhETadg2.js",
+      "_loading-overlay.tsx-CgfnBprL.js",
+      "_use-theme.tsx-CjfsWyRr.js",
+      "_background-pattern.tsx-ikEXrrIs.js",
+      "_decoration-elements.tsx-BoccBXf5.js",
+      "_footer.tsx-CAVXx0sc.js",
+      "_framer-motion-Did_cceX.js"
     ]
   },
   "_marked-DK8KC6kv.js": {
@@ -164,25 +177,23 @@
     "isEntry": true
   },
   "resources/js/app.tsx": {
-    "file": "assets/app-UjQjaz8x.js",
+    "file": "assets/app-FFGmDTvA.js",
     "name": "app",
     "src": "resources/js/app.tsx",
     "isEntry": true,
     "imports": [
       "_react-DITM8GMD.js",
-      "resources/js/bootstrap.js",
       "_react-dom-DLscoSuv.js",
-      "resources/js/main.tsx",
+      "_main.tsx-C2gO4lzO.js",
       "_error.tsx-0lGsyvfI.js",
-      "_axios-t--hEgTQ.js",
       "_scheduler-BNqrtbQi.js",
       "_theme-toggle.tsx-An-jWFwx.js",
       "_framer-motion-Did_cceX.js",
       "_motion-utils-BDWe_Wef.js",
       "_motion-dom-Di8Hrc7E.js",
       "_lucide-react-DzLLSNyd.js",
-      "_header.tsx-DjiEdAQU.js",
-      "_input-form.tsx-FPnOHr9J.js",
+      "_header.tsx-HF58KVop.js",
+      "_input-form.tsx-DiJA7W4F.js",
       "_react-cloudflare-turnstile-BLy7yhGE.js",
       "_results-section.tsx-BhETadg2.js",
       "_html2canvas-BfYXEYrK.js",
@@ -193,43 +204,6 @@
       "_decoration-elements.tsx-BoccBXf5.js",
       "_footer.tsx-CAVXx0sc.js",
       "_react-icons-PX409zGV.js"
-    ]
-  },
-  "resources/js/bootstrap.js": {
-    "file": "assets/bootstrap-DIsMjBwg.js",
-    "name": "bootstrap",
-    "src": "resources/js/bootstrap.js",
-    "isEntry": true,
-    "imports": [
-      "_axios-t--hEgTQ.js"
-    ]
-  },
-  "resources/js/main.tsx": {
-    "file": "assets/main-bJEUuhWf.js",
-    "name": "main",
-    "src": "resources/js/main.tsx",
-    "isEntry": true,
-    "imports": [
-      "_react-DITM8GMD.js",
-      "_theme-toggle.tsx-An-jWFwx.js",
-      "_header.tsx-DjiEdAQU.js",
-      "_input-form.tsx-FPnOHr9J.js",
-      "_results-section.tsx-BhETadg2.js",
-      "_loading-overlay.tsx-CgfnBprL.js",
-      "_use-theme.tsx-CjfsWyRr.js",
-      "_background-pattern.tsx-ikEXrrIs.js",
-      "_decoration-elements.tsx-BoccBXf5.js",
-      "_footer.tsx-CAVXx0sc.js",
-      "_framer-motion-Did_cceX.js",
-      "_lucide-react-DzLLSNyd.js",
-      "_react-cloudflare-turnstile-BLy7yhGE.js",
-      "_html2canvas-BfYXEYrK.js",
-      "_marked-DK8KC6kv.js",
-      "_react-dom-DLscoSuv.js",
-      "_scheduler-BNqrtbQi.js",
-      "_react-icons-PX409zGV.js",
-      "_motion-utils-BDWe_Wef.js",
-      "_motion-dom-Di8Hrc7E.js"
     ]
   }
 }

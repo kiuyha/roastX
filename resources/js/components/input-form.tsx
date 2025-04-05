@@ -140,13 +140,15 @@ export function InputForm({
                 />
               </div>
               <div className="hidden">
-                <Turnstile
+                { typeof Turnstile !== "object" &&
+                  <Turnstile
                   turnstileSiteKey="0x4AAAAAABD5-ZFIXhpQpDFR"
                   key={turnstileKey}
                   callback={ (token) => {
                     setTurnstileToken(token);
                   }}
-                />
+                  />
+                }
               </div>
             </div>
             
@@ -256,13 +258,13 @@ function updateRoastedPeople(lang: string) {
     fetchRoastedPeople();
   }, []);
 
-  // calling fetchRoastedPeople every 5 seconds only if not counting
+  // calling fetchRoastedPeople every 20 seconds only if not counting
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isCounting) {
         fetchRoastedPeople();
       }
-    }, 5000); 
+    }, 20000); 
     return () => clearInterval(interval);
   }, [isCounting]);
 

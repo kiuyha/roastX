@@ -1,7 +1,6 @@
-import './bootstrap';
 import ReactDOM from 'react-dom/client';
-import Home from './main';
-import Error from './error';
+import Home from './pages/main';
+import Error from './pages/error';
 
 // for main page
 const root = document.getElementById("app");

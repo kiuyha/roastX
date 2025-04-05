@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { FaGithub, FaInstagram } from "react-icons/fa";
 
 export default function Footer({ darkMode }: { darkMode: boolean }) {

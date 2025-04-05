@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAnimationControls } from "framer-motion";
-import { ThemeToggle } from "./components/theme-toggle";
-import { Header } from "./components/header";
-import { InputForm } from "./components/input-form";
-import { ResultsSection } from "./components/results-section";
-import { LoadingOverlay } from "./components/loading-overlay";
-import { useTheme } from "./hooks/use-theme";
-import { BackgroundPattern } from "./components/background-pattern";
-import { DecorationElements } from "./components/decoration-elements";
-import Footer from "./components/footer";
-import { XProfile } from "./types/index";
+import { ThemeToggle } from "../components/theme-toggle";
+import { Header } from "../components/header";
+import { InputForm } from "../components/input-form";
+import { ResultsSection } from "../components/results-section";
+import { LoadingOverlay } from "../components/loading-overlay";
+import { useTheme } from "../hooks/use-theme";
+import { BackgroundPattern } from "../components/background-pattern";
+import { DecorationElements } from "../components/decoration-elements";
+import Footer from "../components/footer";
+import { XProfile } from "../types/index";
 
 export default function Home({ lang }: { lang: string }) {
   const [username, setUsername] = useState("");
@@ -121,6 +121,7 @@ export default function Home({ lang }: { lang: string }) {
           showResults={showResults}
           resetForm={resetForm}
           darkMode={darkMode}
+          lang={lang}
         />
 
         <div className="pt-20 md:pt-24 pb-8 md:pb-10 px-3 md:px-8">

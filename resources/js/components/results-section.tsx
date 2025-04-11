@@ -171,6 +171,8 @@ function ProfileCard({ username, profileData, darkMode }: ProfileCardProps) {
                 src={
                   new URL(profileData.profilePicUrl).searchParams.get("url") ?? profileData.profilePicUrl
                 }
+                width="200"
+                height="200"
                 alt={`${username}'s profile`}
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"

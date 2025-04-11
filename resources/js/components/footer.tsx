@@ -27,6 +27,7 @@ export default function Footer({ darkMode }: { darkMode: boolean }) {
           href="https://github.com/kiuyha/roastx"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Visit RoastX GitHub repository"
           className={`p-2 rounded-md ${
             darkMode ? "bg-zinc-800" : "bg-white"
           } border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-shadow`}

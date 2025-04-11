@@ -70,9 +70,10 @@ export function InputForm({
         <img
           src="/roastxlogo.webp"
           alt="RoastX Logo"
+          width="300"
+          height="120"
           className="h-30 md:h-40 w-auto mx-auto mb-5 md:mb-8"
         />
-
         <p
           className={`${
             darkMode ? "text-gray-300" : "text-black"

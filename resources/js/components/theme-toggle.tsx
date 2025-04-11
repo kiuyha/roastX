@@ -10,6 +10,7 @@ export function ThemeToggle({ darkMode, setDarkMode }: ThemeToggleProps) {
   return (
     <motion.button
       onClick={() => setDarkMode(!darkMode)}
+      aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
       className={`fixed top-4 right-4 z-50 p-2 md:p-3 rounded-full ${
         darkMode ? "bg-yellow-400 text-black" : "bg-purple-900 text-white"
       } border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`}

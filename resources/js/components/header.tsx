@@ -30,6 +30,8 @@ export function Header({ showResults, resetForm, darkMode, lang }: HeaderProps) 
           <img
             src="/roastxlogo.webp"
             alt="RoastX Logo"
+            width="160"
+            height="40"
             className="h-10 w-auto md:h-10"
           />
         </motion.div>
@@ -77,6 +79,7 @@ function LanguageSwitcher({selectedLang}: {selectedLang: string}) {
       <button
         className="flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg shadow hover:bg-gray-300 dark:hover:bg-gray-600 md:text-base"
         onClick={() => setIsOpen(!isOpen)}
+        aria-label="Change language"
       >
         {selectedFlag} {selectedLang.toUpperCase()}
       </button>

@@ -41,9 +41,9 @@ export function renderError( lang= 'en', errorCode= '500' ) {
 
 // helper function
 function wrapHtml(id: string, inner: string, head: string, attrs: Record<string, string>) {
-    const attrString = Object.entries(attrs).map(([key, val]) => `${key}="{{${val}}}"`).join(' ');
+    const attrString = Object.entries(attrs).map(([key, val]) => `${key}="{{ ${val} }}"`).join(' ');
     return `<!DOCTYPE html>
-    <html lang="${attrs['data-lang'] ?? 'en'}">
+    <html lang="{{ ${attrs['data-lang'] ?? 'en'} }}">
         <head>
             ${head}
             @vite(['resources/js/app.tsx', 'resources/css/app.css'])

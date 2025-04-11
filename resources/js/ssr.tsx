@@ -17,7 +17,7 @@ export function renderHome(lang= 'en') {
         <meta name="keywords" content="twitter roast,ai roast,social media roast,twitter profile,funny roast, x roast, x profile">
         <meta name="author" content="kiuyha">
         <link rel="icon" href="/favicon.ico">
-        <link preload href="/roastxlogo.webp" type="image/webp">
+        <link preload as="image" href="/roastxlogo.webp" type="image/webp">
         <link rel="manifest" href="manifest.json">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`

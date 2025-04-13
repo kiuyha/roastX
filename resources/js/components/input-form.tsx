@@ -40,9 +40,11 @@ export function InputForm({
   flameControls,
   lang,
 }: InputFormProps) {
-  const [turnstileKey, setTurnstileKey] = useState(Date.now());
+  const [turnstileKey, setTurnstileKey] = useState<number|null>(null);
+  const [isClient, setIsClient] = useState(false);
   // restart turnstile everytime being render
   useEffect(() => {
+    setIsClient(true);
     setTurnstileKey(Date.now());
   }, []);
 
@@ -141,7 +143,7 @@ export function InputForm({
                 />
               </div>
               <div className="hidden">
-                { typeof Turnstile !== "object" &&
+                { isClient &&
                   <Turnstile
                   turnstileSiteKey="0x4AAAAAABD5-ZFIXhpQpDFR"
                   key={turnstileKey}

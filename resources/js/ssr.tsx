@@ -1,9 +1,9 @@
-import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import Home from './pages/main';
 import Error from './pages/error';
 
 export function renderHome(lang= 'en') {
-    const html = renderToStaticMarkup(<Home lang={lang} />);
+    const html = renderToString(<Home lang={lang} />);
     const head = `<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -26,7 +26,7 @@ export function renderHome(lang= 'en') {
 }
 
 export function renderError( lang= 'en', errorCode= '500' ) {
-    const html = renderToStaticMarkup(<Error lang={lang} errorCode={errorCode} />);
+    const html = renderToString(<Error lang={lang} errorCode={errorCode} />);
     const head = `<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -43,15 +43,16 @@ export function renderError( lang= 'en', errorCode= '500' ) {
 function wrapHtml(id: string, inner: string, head: string, attrs: Record<string, string>) {
     const attrString = Object.entries(attrs).map(([key, val]) => `${key}="{{ ${val} }}"`).join(' ');
     return `<!DOCTYPE html>
-    <html lang="{{ ${attrs['data-lang'] ?? 'en'} }}">
+    <html>
         <head>
             ${head}
-            @vite(['resources/js/app.tsx', 'resources/css/app.css'])
         </head>
         <body>
-            <div id="${id}" ${attrString}>
-                ${inner}
-            </div>
+<div id="${id}" ${attrString}>
+${inner}
+</div>
+        @viteReactRefresh
+        @vite(['resources/js/app.tsx', 'resources/css/app.css'])
         </body>
     </html>`;
 }

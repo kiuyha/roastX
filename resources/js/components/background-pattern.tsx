@@ -17,9 +17,10 @@ interface BackgroundPatternProps {
               }, ${
                 darkMode ? "#ffffff" : "#000000"
               } 1px, transparent 1px, transparent 80px),
-                                  repeating-linear-gradient(90deg, ${
-                                    darkMode ? "#ffffff" : "#000000"
-                                  }, ${
+                repeating-linear-gradient(90deg, 
+                ${
+                  darkMode ? "#ffffff" : "#000000"
+                }, ${
                 darkMode ? "#ffffff" : "#000000"
               } 1px, transparent 1px, transparent 80px)`,
               backgroundSize: "80px 80px",

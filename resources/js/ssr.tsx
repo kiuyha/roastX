@@ -48,9 +48,9 @@ function wrapHtml(id: string, inner: string, head: string, attrs: Record<string,
             ${head}
         </head>
         <body>
-<div id="${id}" ${attrString}>
-${inner}
-</div>
+            <div id="${id}" ${attrString}>
+                ${inner}
+            </div>
         @viteReactRefresh
         @vite(['resources/js/app.tsx', 'resources/css/app.css'])
         </body>

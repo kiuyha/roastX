@@ -37,19 +37,19 @@ class MainController extends Controller
     public function fetchData(Request $request, String $lang): JsonResponse
     {
         if (!in_array($lang, $this->supportedLanguages)) abort(404);
-        
+
         $data = $request->all();
         $username = $data['username'];
-        
+
         // check username validation
-        if (!$username || !is_string($username)){
+        if (!$username || !is_string($username)) {
             return response()->json([
                 'success' => false,
-                'message' => $lang == 'en' ? 
+                'message' => $lang == 'en' ?
                     'Please enter a Twitter/X username.' :
                     'Silahkan masukkan username Twitter/X.'
             ], 400);
-        } 
+        }
 
         $token = $data['turnstileToken'];
         $ip = $this->getUserIpAdress();
@@ -57,7 +57,7 @@ class MainController extends Controller
         if (!$this->checkTurnstile($token, $ip)) {
             return response()->json([
                 'success' => false,
-                'message' => $lang == 'en' ? 
+                'message' => $lang == 'en' ?
                     'You have been detected as a robot.' :
                     'Kamu telah terdeteksi sebagai robot.'
             ], 400);
@@ -78,26 +78,26 @@ class MainController extends Controller
                 'roastText' => $previousResponse->response[$lang],
                 'success' => true
             ]);
-        // else return json with fetch api response
-        } else if(FormSubmission::where('ip_address', $ip)
+            // else return json with fetch api response
+        } else if (FormSubmission::where('ip_address', $ip)
             ->whereDate('created_at', today())
-            ->count() >= 10) {
+            ->count() >= 10
+        ) {
             // block user if exceed daily limit
             return response()->json([
                 'success' => false,
-                'message' => $lang == 'en' ? 
+                'message' => $lang == 'en' ?
                     'You have exceeded the daily limit of 10 times. Please try again tomorrow.' :
                     'Kamu telah melewati batas harian sebanyak 10 kali. Silahkan coba lagi besok.'
             ], 400);
-        }else {
+        } else {
             $response = $this->getResponse($username, $previousResponse, $lang);
             $response['success'] ?? $save();
             return response()->json($response, ($response['success'] ? 200 : 400));
         };
-
     }
 
-    protected function checkTurnstile(string $token, string $ip) : bool
+    protected function checkTurnstile(string $token, string $ip): bool
     {
         [$body, $err, $http_code] = $this->curlRequest(
             isPost: true,
@@ -116,22 +116,22 @@ class MainController extends Controller
         return json_decode($body)->success;
     }
 
-    protected function getUserIpAdress() : string
+    protected function getUserIpAdress(): string
     {
         if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
             return $_SERVER['HTTP_CF_CONNECTING_IP'];
         }
-        if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             return explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0];
         } else {
             return $_SERVER['REMOTE_ADDR'];
         };
     }
 
-    protected function getResponse(string $username , ?PreviousResponse $previousResponse, string $lang) : array
+    protected function getResponse(string $username, ?PreviousResponse $previousResponse, string $lang): array
     {
         // delete data if it's older than 1 day
-        if ($previousResponse && $previousResponse->created_at < today()->subDays(1)){
+        if ($previousResponse && $previousResponse->created_at < today()->subDays(1)) {
             $previousResponse->delete();
             $previousResponse = null;
         }
@@ -148,46 +148,48 @@ class MainController extends Controller
         $responseGemini = $this->getResponseGemini($username, $responseX, $lang);
 
         // only write if gemini's response is not null
-        if ($responseGemini){
-            if ($previousResponse){
+        $responseX['profilePicUrl'] = env('APP_URL') . "/proxy-image?url=" . $responseX['profilePicUrl'];
+        
+        if ($responseGemini) {
+            if ($previousResponse) {
                 $previousResponse->update([
                     'response' => array_merge($previousResponse->response, ["$lang" => $responseGemini])
-                ]);            
-            }else{
+                ]);
+            } else {
                 PreviousResponse::create([
                     'username' => $username,
                     'data' => $responseX,
-                    'response' => [ "$lang" => $responseGemini]
+                    'response' => ["$lang" => $responseGemini]
                 ]);
             }
         }
 
         return [
             'dataProfile' => $responseX,
-            'roastText' => $responseGemini ?? 
-            (
-                $lang == 'en' ?
-                "Sorry, we cannot create a roast for this profile at the moment.":
-                "Maaf, kami tidak dapat membuat roasting untuk profil ini saat ini."
-            ),
+            'roastText' => $responseGemini ??
+                (
+                    $lang == 'en' ?
+                    "Sorry, we cannot create a roast for this profile at the moment." :
+                    "Maaf, kami tidak dapat membuat roasting untuk profil ini saat ini."
+                ),
             'success' => true,
         ];
     }
 
-    protected function getResponseX(string $username, string $lang) : array|string
+    protected function getResponseX(string $username, string $lang): array|string
     {
         // I using scraping because X api is too expensive
-        try{
+        try {
             // use curl because the Http not working properly with nitter
-            [$body, $err, $http_code]  =$this->curlRequest(
-                isPost:false,
-                url:"https://nitter.net/$username",
-                encoding:true
+            [$body, $err, $http_code]  = $this->curlRequest(
+                isPost: false,
+                url: "https://nitter.net/$username",
+                encoding: true
             );
-            if($err) {
+            if ($err) {
                 Log::error("1. Error X response: $err");
                 return $lang == 'en' ? 'Something went wrong' : 'Terjadi kesalahan';
-            }else if (empty($body) || $http_code != 200) {
+            } else if (empty($body) || $http_code != 200) {
                 return $lang == 'en' ? 'Username not found' : 'Username tidak ditemukan';
             }
 
@@ -217,7 +219,7 @@ class MainController extends Controller
             foreach ($xpath->query('//div[@class="timeline-item "]') as $idx => $tweet) {
                 if ($idx >= 5) break;
                 $captionNode = $xpath->query('.//div[@class="tweet-content media-body"]', $tweet)->item(0) ?? null;
-                                        
+
                 $tweets[] = [
                     'date' => $xpath->query('.//span[@class="tweet-date"]/a/@title', $tweet)->item(0)->nodeValue ?? null,
                     'isRetweeted' => $xpath->query('.//div[@class="retweet-header"]', $tweet)->item(0) ? true : false,
@@ -230,17 +232,17 @@ class MainController extends Controller
             }
 
             return [
-                'profilePicUrl' => env('APP_URL') . "/proxy-image?url=https://nitter.net$profilePicUrl",
+                'profilePicUrl' => "https://nitter.net$profilePicUrl",
                 'fullName' => $fullname,
                 'biography' => $biography,
                 'isVerified' => $isVerified,
                 'isPrivate' => $isPrivate,
-                'tweetsCount' => $this->formatNumber( (int) str_replace(',', '', $tweetsCount) ),
-                'followsCount' => $this->formatNumber( (int) str_replace(',', '', $following) ),
-                'followersCount' => $this->formatNumber( (int) str_replace(',', '', $followers) ),
+                'tweetsCount' => $this->formatNumber((int) str_replace(',', '', $tweetsCount)),
+                'followsCount' => $this->formatNumber((int) str_replace(',', '', $following)),
+                'followersCount' => $this->formatNumber((int) str_replace(',', '', $followers)),
                 'tweets' => $tweets,
             ];
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             Log::error("2. Error get response X, error: " . $e->getCode() . " " . $e->getMessage());
             return $lang == 'en' ? 'Something went wrong' : 'Terjadi kesalahan';
         }
@@ -261,21 +263,20 @@ class MainController extends Controller
         $apiKey = explode(',', env('GEMINI_API_KEY'))[$count] ?? null;
         if ($apiKey == null) return null;
 
-        try{
+        try {
             $profileDataString = json_encode($profileDataString);
             [$body, $err, $http_code] = $this->curlRequest(
                 isPost: true,
                 url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$apiKey",
                 encoding: true,
-                payload:
-                [
+                payload: [
                     'contents' => [
                         [
                             'parts' => [
                                 [
-                                    'text' => $lang == 'en'?
-    
-                                    "Give a sarcastic, humiliating, and funny (but not too harsh) roast for Twitter/X profile \"{$username}\".
+                                    'text' => $lang == 'en' ?
+
+                                        "Give a sarcastic, humiliating, and funny (but not too harsh) roast for Twitter/X profile \"{$username}\".
                                     IMPORTANT: Give ONLY text roast, without any opening or closing words like \"Ok, ready\" or \"Here's the roast for\". Just start with the roast.
                                     Occasionally use emoticon.
                                     Use **sarcastic and humiliating** until it gets mental,
@@ -283,8 +284,8 @@ class MainController extends Controller
                                     Don't talk about the profile picture being blur, except if you understand it
                                     use words that can be understood.
                                     You can roast the number of followers, tweets, bio, profile picture, or anything based on the following data (the data comes from Nitter, don't talk about it): {$profileDataString}" :
-    
-                                    "Berikan roasting sarkastik, kejam, dan menyindir secara lucu (tapi tidak terlalu kasar) untuk profil Twitter/X \"{$username}\" ini. 
+
+                                        "Berikan roasting sarkastik, kejam, dan menyindir secara lucu (tapi tidak terlalu kasar) untuk profil Twitter/X \"{$username}\" ini. 
                                     PENTING: Berikan HANYA teks roasting, tanpa kata pengantar atau pembuka apapun seperti \"Oke, siap\" atau \"Berikut roasting untuk\". Langsung mulai dengan roastingnya.
                                     sesekali gunakan emoticon.
                                     Gunakan **gaya sarkastik dan menyakitkan** sampai kena mental,
@@ -304,7 +305,7 @@ class MainController extends Controller
                 return null;
             };
             ServiceLog::create(['service' => 'Gemini']);
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             Log::error("2. Error get response Gemini, error: " . $e->getCode() . " " . $e->getMessage());
             return null;
         };
@@ -336,17 +337,16 @@ class MainController extends Controller
         // Try to fetch the image content
         try {
             // using curl because it more faster than Http
-            [$body, $err, $http_code, $headerValue] = $this->curlRequest(isPost:false, url:$imageUrl, headerKey:'Content-Type');
+            [$body, $err, $http_code, $headerValue] = $this->curlRequest(isPost: false, url: $imageUrl, headerKey: 'Content-Type');
             if ($err || $http_code != 200) {
                 return response("Failed to fetch image", $http_code);
-            }    
+            }
 
             // Return the image with the appropriate content type
             return Response::make($body, 200, [
                 'Content-Type' => $headerValue ?? 'image/jpeg',
                 'Cache-Control' => 'public, max-age=86400', // Cache for 1 day
             ]);
-
         } catch (\Exception $e) {
             // Log the error and return a server error response
             Log::error('Error proxying image: ' . $e->getMessage());
@@ -360,8 +360,8 @@ class MainController extends Controller
         return response()->json(['roastedPeople' => $peopleRoasted]);
     }
 
-    protected function curlRequest(bool $isPost, string $url, ?string $headerKey=null ,bool $encoding = false, ?array $payload = null): array
-    { 
+    protected function curlRequest(bool $isPost, string $url, ?string $headerKey = null, bool $encoding = false, ?array $payload = null): array
+    {
         $curl = curl_init();
         $headerValue = null;
 
@@ -370,15 +370,16 @@ class MainController extends Controller
             CURLOPT_ENCODING => $encoding ? "" : "identity",
             CURLOPT_RETURNTRANSFER => true,  // Ensure response is returned as a string
             CURLOPT_HEADER => false,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0, // Use HTTP/2
+            // CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0, // Use HTTP/2
             CURLOPT_HTTPHEADER => [
                 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
                 'Accept-Language: en-US,en;q=0.5',
+                'Upgrade-Insecure-Requests: 1'
             ], // Include headers in the request
         ];
 
         if ($headerKey) {
-            $curlOptions[CURLOPT_HEADERFUNCTION] = function($curl, $header) use (&$headerValue, $headerKey) {
+            $curlOptions[CURLOPT_HEADERFUNCTION] = function ($curl, $header) use (&$headerValue, $headerKey) {
                 if (stripos($header, $headerKey . ':') === 0) {
                     $headerValue = trim(substr($header, strlen($headerKey) + 1));
                 }
@@ -396,7 +397,7 @@ class MainController extends Controller
         $body = curl_exec($curl);
         $err = curl_error($curl);
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        
+
         curl_close($curl);
         return [$body, $err, $http_code, $headerValue];
     }

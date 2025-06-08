@@ -9,7 +9,7 @@ import {
   User,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import Turnstile from "react-cloudflare-turnstile";
+import Turnstile from "react-turnstile";
 
 interface InputFormProps {
   username: string;
@@ -37,17 +37,8 @@ export function InputForm({
   loading,
   error,
   darkMode,
-  flameControls,
   lang,
 }: InputFormProps) {
-  const [turnstileKey, setTurnstileKey] = useState<number|null>(null);
-  const [isClient, setIsClient] = useState(false);
-  // restart turnstile everytime being render
-  useEffect(() => {
-    setIsClient(true);
-    setTurnstileKey(Date.now());
-  }, []);
-
   useEffect(() => {
     if (stage === "turnstile" && turnstileToken) {
       fetchData();
@@ -142,17 +133,13 @@ export function InputForm({
                   required
                 />
               </div>
-              <div className="hidden">
-                { isClient &&
-                  <Turnstile
-                  turnstileSiteKey="0x4AAAAAABD5-ZFIXhpQpDFR"
-                  key={turnstileKey}
-                  callback={ (token) => {
+              <Turnstile
+                sitekey="0x4AAAAAABD5-ZFIXhpQpDFR"
+                refreshExpired="auto"
+                onVerify={(token) => {
                     setTurnstileToken(token);
-                  }}
-                  />
-                }
-              </div>
+                }}
+              />
             </div>
             
 

@@ -68,8 +68,7 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
-        },
-        // "vendor-dir": "new_vendor"
+        }
     },
     "minimum-stability": "stable",
     "prefer-stable": true

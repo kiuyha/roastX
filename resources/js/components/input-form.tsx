@@ -133,7 +133,7 @@ export function InputForm({
                   required
                 />
               </div>
-              {window !== undefined && <Turnstile
+              {typeof window !== 'undefined' && <Turnstile
                 sitekey="0x4AAAAAABD5-ZFIXhpQpDFR"
                 refreshExpired="auto"
                 onVerify={(token) => {

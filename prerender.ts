@@ -9,7 +9,7 @@ fs.writeFileSync('public/sitemap.xml',
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <!-- Indonesian version -->
   <url>
-    <loc>https://roastx.kiuyha.my.id/id</loc> <!-- Direct URL to the Indonesian page -->
+    <loc>https://roastx.kiuyha.dev/id</loc> <!-- Direct URL to the Indonesian page -->
     <lastmod>${date}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -17,7 +17,7 @@ fs.writeFileSync('public/sitemap.xml',
 
   <!-- English version -->
   <url>
-    <loc>https://roastx.kiuyha.my.id/en</loc> <!-- Direct URL to the English page -->
+    <loc>https://roastx.kiuyha.dev/en</loc> <!-- Direct URL to the English page -->
     <lastmod>${date}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>

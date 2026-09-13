@@ -29,7 +29,7 @@ RoastX is inspired by the [Roastgram](https://github.com/syahrulnizam7/roastgram
 ---
 
 ## 📸 ScreenShot
-<img src="https://roastx.kiuyha.my.id/roastx.png">
+<img src="https://roastx.kiuyha.dev/roastx.png">
 
 Terima kasih telah menggunakan RoastX! 🚀🔥
 
